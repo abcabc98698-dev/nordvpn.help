@@ -3,6 +3,24 @@
  * 所有 fade 动画的 sm 版本（移动距离更小，更细腻）
  */
 
+/* 核心兜底保障：即使 JS 延迟或异常，0.4s 后纯 CSS 平滑展现全部内容，100% 杜绝空白卡片 */
+@keyframes aos-auto-fallback {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+[data-aos] {
+  animation: aos-auto-fallback 0.5s ease 0.4s forwards;
+}
+
+[data-aos].aos-animate {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+
 /* fade-up-sm: 从下方 30px 淡入（原版 100px） */
 [data-aos="fade-up-sm"] {
   transform: translateY(30px);

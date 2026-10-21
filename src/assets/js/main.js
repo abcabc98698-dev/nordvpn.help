@@ -23,68 +23,17 @@ const unstickyClassesContainer = [
 ];
 let headerElement = null;
 
-function initApp() {
-	headerElement = document.getElementById("header");
-
-	if (
-		localStorage.getItem("dark_mode") &&
-		localStorage.getItem("dark_mode") === "true"
-	) {
-		window.darkMode = true;
-		showNight();
-	} else {
-		showDay();
-	}
-
-	stickyHeaderFuncionality();
-	applyMenuItemClasses();
-	evaluateHeaderPosition();
-	mobileMenuFunctionality();
-
-	// 初始化 AOS 动效
-	try {
-		AOS.init({
-			duration: 400,
-			easing: 'ease-out-cubic',
-			once: true,
-			offset: 20,
-			delay: 0,
-		});
-		// 动态内容或懒加载图片挂载后刷新 AOS
-		setTimeout(() => {
-			AOS.refresh();
-		}, 150);
-	} catch (e) {
-		console.warn("AOS init failed, fallback to visible", e);
-	}
-
-	// 兜底保障：若任何元素因动画异常未触发，1秒后强制全部呈现，杜绝空白卡片
-	setTimeout(() => {
-		document.querySelectorAll('[data-aos]:not(.aos-animate)').forEach((el) => {
-			el.classList.add('aos-animate');
-		});
-	}, 800);
-}
-
-if (document.readyState === 'loading') {
-	document.addEventListener("DOMContentLoaded", initApp);
-} else {
-	initApp();
-}
-
-window.stickyHeaderFuncionality = () => {
+function stickyHeaderFunctionality() {
 	window.addEventListener("scroll", () => {
 		evaluateHeaderPosition();
 	}, { passive: true });
-};
+}
 
-window.evaluateHeaderPosition = () => {
+function evaluateHeaderPosition() {
 	if (!headerElement || !headerElement.firstElementChild) return;
 	if (window.scrollY > 48) {
 		headerElement.firstElementChild.classList.add(...stickyClassesContainer);
-		headerElement.firstElementChild.classList.remove(
-			...unstickyClassesContainer,
-		);
+		headerElement.firstElementChild.classList.remove(...unstickyClassesContainer);
 		headerElement.classList.add(...stickyClasses);
 		headerElement.classList.remove(...unstickyClasses);
 	} else {
@@ -93,22 +42,71 @@ window.evaluateHeaderPosition = () => {
 		headerElement.classList.add(...unstickyClasses);
 		headerElement.classList.remove(...stickyClasses);
 	}
-};
-
-const darkToggleBtn = document.getElementById("darkToggle");
-if (darkToggleBtn) {
-	darkToggleBtn.addEventListener("click", () => {
-		document.documentElement.classList.add("duration-300");
-
-		if (document.documentElement.classList.contains("dark")) {
-			localStorage.removeItem("dark_mode");
-			showDay(true);
-		} else {
-			localStorage.setItem("dark_mode", true);
-			showNight(true);
-		}
-	});
 }
+
+function applyMenuItemClasses() {
+	const menuItems = document.querySelectorAll("#menu a");
+	for (let i = 0; i < menuItems.length; i++) {
+		if (menuItems[i].pathname === window.location.pathname) {
+			menuItems[i].classList.add("text-neutral-900", "dark:text-white");
+		}
+	}
+}
+
+function mobileMenuFunctionality() {
+	const openBtn = document.getElementById("openMenu");
+	const closeBtn = document.getElementById("closeMenu");
+	if (openBtn) {
+		openBtn.onclick = () => {
+			openMobileMenu();
+		};
+	}
+	if (closeBtn) {
+		closeBtn.onclick = () => {
+			closeMobileMenu();
+		};
+	}
+}
+
+function openMobileMenu() {
+	const openMenu = document.getElementById("openMenu");
+	const closeMenu = document.getElementById("closeMenu");
+	const menu = document.getElementById("menu");
+	const mobileMenuBackground = document.getElementById("mobileMenuBackground");
+
+	openMenu?.classList.add("hidden");
+	closeMenu?.classList.remove("hidden");
+	closeMenu?.classList.add("flex");
+	menu?.classList.remove("hidden");
+	mobileMenuBackground?.classList.add("opacity-0");
+	mobileMenuBackground?.classList.remove("hidden");
+	document.body.style.overflow = "hidden";
+
+	setTimeout(() => {
+		mobileMenuBackground?.classList.remove("opacity-0");
+	}, 1);
+}
+
+function closeMobileMenu() {
+	const openMenu = document.getElementById("openMenu");
+	const closeMenu = document.getElementById("closeMenu");
+	const menu = document.getElementById("menu");
+	const mobileMenuBackground = document.getElementById("mobileMenuBackground");
+
+	closeMenu?.classList.add("hidden");
+	closeMenu?.classList.remove("flex");
+	openMenu?.classList.remove("hidden");
+	menu?.classList.add("hidden");
+	mobileMenuBackground?.classList.add("hidden");
+	document.body.style.overflow = "";
+}
+
+// Expose on window for backward compatibility
+window.openMobileMenu = openMobileMenu;
+window.closeMobileMenu = closeMobileMenu;
+window.evaluateHeaderPosition = evaluateHeaderPosition;
+window.stickyHeaderFuncionality = stickyHeaderFunctionality;
+window.applyMenuItemClasses = applyMenuItemClasses;
 
 function showDay(animate) {
 	const sun = document.getElementById("sun");
@@ -166,63 +164,69 @@ function showNight(animate) {
 	}, timeout);
 }
 
-window.applyMenuItemClasses = () => {
-	const menuItems = document.querySelectorAll("#menu a");
-	for (let i = 0; i < menuItems.length; i++) {
-		if (menuItems[i].pathname === window.location.pathname) {
-			menuItems[i].classList.add("text-neutral-900", "dark:text-white");
-		}
-	}
-};
+function initApp() {
+	headerElement = document.getElementById("header");
 
-function mobileMenuFunctionality() {
-	const openBtn = document.getElementById("openMenu");
-	const closeBtn = document.getElementById("closeMenu");
-	if (openBtn) {
-		openBtn.onclick = () => {
-			if (typeof window.openMobileMenu === "function") {
-				window.openMobileMenu();
-			}
-		};
+	try {
+		if (
+			localStorage.getItem("dark_mode") &&
+			localStorage.getItem("dark_mode") === "true"
+		) {
+			window.darkMode = true;
+			showNight();
+		} else {
+			showDay();
+		}
+	} catch (e) {}
+
+	try {
+		stickyHeaderFunctionality();
+		applyMenuItemClasses();
+		evaluateHeaderPosition();
+		mobileMenuFunctionality();
+	} catch (e) {}
+
+	// 初始化 AOS 动效
+	try {
+		AOS.init({
+			duration: 400,
+			easing: 'ease-out-cubic',
+			once: true,
+			offset: 20,
+			delay: 0,
+		});
+		setTimeout(() => {
+			AOS.refresh();
+		}, 150);
+	} catch (e) {
+		console.warn("AOS init fallback", e);
 	}
-	if (closeBtn) {
-		closeBtn.onclick = () => {
-			if (typeof window.closeMobileMenu === "function") {
-				window.closeMobileMenu();
-			}
-		};
-	}
+
+	// 兜底保障：若任何元素因动画异常未触发，0.5秒后强制全部呈现，杜绝空白卡片
+	setTimeout(() => {
+		document.querySelectorAll('[data-aos]:not(.aos-animate)').forEach((el) => {
+			el.classList.add('aos-animate');
+		});
+	}, 500);
 }
 
-window.openMobileMenu = () => {
-	const openMenu = document.getElementById("openMenu");
-	const closeMenu = document.getElementById("closeMenu");
-	const menu = document.getElementById("menu");
-	const mobileMenuBackground = document.getElementById("mobileMenuBackground");
+if (document.readyState === 'loading') {
+	document.addEventListener("DOMContentLoaded", initApp);
+} else {
+	initApp();
+}
 
-	openMenu?.classList.add("hidden");
-	closeMenu?.classList.remove("hidden");
-	closeMenu?.classList.add("flex");
-	menu?.classList.remove("hidden");
-	mobileMenuBackground?.classList.add("opacity-0");
-	mobileMenuBackground?.classList.remove("hidden");
-	document.body.style.overflow = "hidden";
+const darkToggleBtn = document.getElementById("darkToggle");
+if (darkToggleBtn) {
+	darkToggleBtn.addEventListener("click", () => {
+		document.documentElement.classList.add("duration-300");
 
-	setTimeout(() => {
-		mobileMenuBackground?.classList.remove("opacity-0");
-	}, 1);
-};
-
-window.closeMobileMenu = () => {
-	const openMenu = document.getElementById("openMenu");
-	const closeMenu = document.getElementById("closeMenu");
-	const menu = document.getElementById("menu");
-	const mobileMenuBackground = document.getElementById("mobileMenuBackground");
-
-	closeMenu?.classList.add("hidden");
-	closeMenu?.classList.remove("flex");
-	openMenu?.classList.remove("hidden");
-	menu?.classList.add("hidden");
-	mobileMenuBackground?.classList.add("hidden");
-	document.body.style.overflow = "";
-};
+		if (document.documentElement.classList.contains("dark")) {
+			try { localStorage.removeItem("dark_mode"); } catch(e) {}
+			showDay(true);
+		} else {
+			try { localStorage.setItem("dark_mode", "true"); } catch(e) {}
+			showNight(true);
+		}
+	});
+}
