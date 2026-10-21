@@ -1,4 +1,4 @@
-// Add your javascript here
+// Global client scripts & animations
 import AOS from 'aos';
 
 window.darkMode = false;
@@ -23,7 +23,7 @@ const unstickyClassesContainer = [
 ];
 let headerElement = null;
 
-document.addEventListener("DOMContentLoaded", () => {
+function initApp() {
 	headerElement = document.getElementById("header");
 
 	if (
@@ -35,39 +35,51 @@ document.addEventListener("DOMContentLoaded", () => {
 	} else {
 		showDay();
 	}
+
 	stickyHeaderFuncionality();
 	applyMenuItemClasses();
 	evaluateHeaderPosition();
 	mobileMenuFunctionality();
 
-	// 初始化 AOS
-	AOS.init({
-		duration: 400,
-		easing: 'ease-out-cubic',
-		once: true,
-		offset: 20,
-		delay: 0,
-	});
-});
+	// 初始化 AOS 动效
+	try {
+		AOS.init({
+			duration: 400,
+			easing: 'ease-out-cubic',
+			once: true,
+			offset: 20,
+			delay: 0,
+		});
+		// 动态内容或懒加载图片挂载后刷新 AOS
+		setTimeout(() => {
+			AOS.refresh();
+		}, 150);
+	} catch (e) {
+		console.warn("AOS init failed, fallback to visible", e);
+	}
 
-// window.toggleDarkMode = function(){
-//     document.documentElement.classList.toggle('dark');
-//     if(document.documentElement.classList.contains('dark')){
-//         localStorage.setItem('dark_mode', true);
-//         window.darkMode = true;
-//     } else {
-//         window.darkMode = false;
-//         localStorage.setItem('dark_mode', false);
-//     }
-// }
+	// 兜底保障：若任何元素因动画异常未触发，1秒后强制全部呈现，杜绝空白卡片
+	setTimeout(() => {
+		document.querySelectorAll('[data-aos]:not(.aos-animate)').forEach((el) => {
+			el.classList.add('aos-animate');
+		});
+	}, 800);
+}
+
+if (document.readyState === 'loading') {
+	document.addEventListener("DOMContentLoaded", initApp);
+} else {
+	initApp();
+}
 
 window.stickyHeaderFuncionality = () => {
 	window.addEventListener("scroll", () => {
 		evaluateHeaderPosition();
-	});
+	}, { passive: true });
 };
 
 window.evaluateHeaderPosition = () => {
+	if (!headerElement || !headerElement.firstElementChild) return;
 	if (window.scrollY > 48) {
 		headerElement.firstElementChild.classList.add(...stickyClassesContainer);
 		headerElement.firstElementChild.classList.remove(
@@ -75,78 +87,81 @@ window.evaluateHeaderPosition = () => {
 		);
 		headerElement.classList.add(...stickyClasses);
 		headerElement.classList.remove(...unstickyClasses);
-		// document.getElementById("menu").classList.add("top-[75px]");
-		// document.getElementById("menu").classList.remove("top-[75px]");
 	} else {
 		headerElement.firstElementChild.classList.remove(...stickyClassesContainer);
 		headerElement.firstElementChild.classList.add(...unstickyClassesContainer);
 		headerElement.classList.add(...unstickyClasses);
 		headerElement.classList.remove(...stickyClasses);
-		// document.getElementById("menu").classList.remove("top-[56px]");
-		// document.getElementById("menu").classList.add("top-[75px]");
 	}
 };
 
-document.getElementById("darkToggle").addEventListener("click", () => {
-	document.documentElement.classList.add("duration-300");
+const darkToggleBtn = document.getElementById("darkToggle");
+if (darkToggleBtn) {
+	darkToggleBtn.addEventListener("click", () => {
+		document.documentElement.classList.add("duration-300");
 
-	if (document.documentElement.classList.contains("dark")) {
-		localStorage.removeItem("dark_mode");
-		showDay(true);
-	} else {
-		localStorage.setItem("dark_mode", true);
-		showNight(true);
-	}
-});
+		if (document.documentElement.classList.contains("dark")) {
+			localStorage.removeItem("dark_mode");
+			showDay(true);
+		} else {
+			localStorage.setItem("dark_mode", true);
+			showNight(true);
+		}
+	});
+}
 
 function showDay(animate) {
-	document.getElementById("sun").classList.remove("setting");
-	document.getElementById("moon").classList.remove("rising");
+	const sun = document.getElementById("sun");
+	const moon = document.getElementById("moon");
+	const dayText = document.getElementById("dayText");
+	const nightText = document.getElementById("nightText");
+
+	if (sun) sun.classList.remove("setting");
+	if (moon) moon.classList.remove("rising");
 
 	let timeout = 0;
-
-	if (animate) {
+	if (animate && moon) {
 		timeout = 500;
-
-		document.getElementById("moon").classList.add("setting");
+		moon.classList.add("setting");
 	}
 
 	setTimeout(() => {
-		document.getElementById("dayText").classList.remove("hidden");
-		document.getElementById("nightText").classList.add("hidden");
-
-		document.getElementById("moon").classList.add("hidden");
-		document.getElementById("sun").classList.remove("hidden");
+		if (dayText) dayText.classList.remove("hidden");
+		if (nightText) nightText.classList.add("hidden");
+		if (moon) moon.classList.add("hidden");
+		if (sun) sun.classList.remove("hidden");
 
 		if (animate) {
 			document.documentElement.classList.remove("dark");
-			document.getElementById("sun").classList.add("rising");
+			if (sun) sun.classList.add("rising");
 		}
 	}, timeout);
 }
 
 function showNight(animate) {
-	document.getElementById("moon").classList.remove("setting");
-	document.getElementById("sun").classList.remove("rising");
+	const sun = document.getElementById("sun");
+	const moon = document.getElementById("moon");
+	const dayText = document.getElementById("dayText");
+	const nightText = document.getElementById("nightText");
+
+	if (moon) moon.classList.remove("setting");
+	if (sun) sun.classList.remove("rising");
 
 	let timeout = 0;
-
-	if (animate) {
+	if (animate && sun) {
 		timeout = 500;
-
-		document.getElementById("sun").classList.add("setting");
+		sun.classList.add("setting");
 	}
 
 	setTimeout(() => {
-		document.getElementById("nightText").classList.remove("hidden");
-		document.getElementById("dayText").classList.add("hidden");
-
-		document.getElementById("sun").classList.add("hidden");
-		document.getElementById("moon").classList.remove("hidden");
+		if (nightText) nightText.classList.remove("hidden");
+		if (dayText) dayText.classList.add("hidden");
+		if (sun) sun.classList.add("hidden");
+		if (moon) moon.classList.remove("hidden");
 
 		if (animate) {
 			document.documentElement.classList.add("dark");
-			document.getElementById("moon").classList.add("rising");
+			if (moon) moon.classList.add("rising");
 		}
 	}, timeout);
 }
@@ -158,7 +173,6 @@ window.applyMenuItemClasses = () => {
 			menuItems[i].classList.add("text-neutral-900", "dark:text-white");
 		}
 	}
-	//:class="{ 'text-neutral-900 dark:text-white': window.location.pathname == '{menu.url}', 'text-neutral-700 dark:text-neutral-400': window.location.pathname != '{menu.url}' }"
 };
 
 function mobileMenuFunctionality() {
