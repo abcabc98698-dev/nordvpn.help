@@ -13,9 +13,25 @@ const {
   description = "",
   items = []
 } = Astro.props;
+
+const faqSchema = items && items.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": items.map(item => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
+    }
+  }))
+} : null;
 ---
 
 <section class="py-16 md:py-24 site-container">
+  {faqSchema && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  )}
   <SectionHeader title={title} description={description} />
   <div class="max-w-2xl mx-auto mt-8">
     {items.map((item: { question: string; answer: string }, index: number) => (

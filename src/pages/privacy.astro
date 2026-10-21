@@ -1,0 +1,67 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import { siteConfig } from "@/config/site";
+import { ShieldCheck } from "@lucide/astro";
+---
+
+<Layout
+  title={`隐私政策 (Privacy Policy) — ${siteConfig.title}`}
+  description="NordVPN 官方授权专线站遵循严格的零日志（No-Logs）原则，物理隔离保护用户通信隐私与数据安全。"
+>
+  <section class="site-container my-12">
+    <PageHeader
+      title="隐私保护政策 (Privacy Policy)"
+      description="生效日期：2020年1月1日 · 最近修订：2026年1月"
+    />
+  </section>
+
+  <section class="site-container max-w-3xl mx-auto pb-24">
+    <div class="prose dark:prose-invert max-w-none space-y-8 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+      
+      <div class="p-4 rounded-xl bg-primary/10 border border-primary/20 text-neutral-700 dark:text-neutral-200">
+        <p class="font-bold mb-1 flex items-center gap-2">
+          <ShieldCheck class="w-4 h-4 text-primary" /> 核心承诺：严格无日志准则 (No-Logs Policy)
+        </p>
+        <p class="text-xs">
+          作为获得品牌授权的专业专线服务站点（nordvpn.help），我们绝不收集、记录、存储或共享任何用户的浏览历史、网络流量内容、DNS 请求或目标 IP。所有专线中转服务器均运行于纯内存（RAM-only）架构中。
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">1. 我们不收集的信息</h3>
+        <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
+          <li><strong>用户访问记录：</strong>您在网络上访问的任何网站、下载的文件或浏览的应用数据。</li>
+          <li><strong>DNS 查询数据：</strong>我们部署私有加密 DNS，绝不上报或保留任何域名解析请求。</li>
+          <li><strong>用户通信内容：</strong>端到端加密数据隧道中的所有有效载荷信息。</li>
+          <li><strong>用户原生客户端 IP：</strong>连接建立后，物理接入 IP 即刻在内存中解构，不持久化落盘。</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">2. 我们仅维护的必要服务数据</h3>
+        <p>为确保套餐流量计费的准确性与账户正常认证，系统仅在加密数据库中维护以下最少信息：</p>
+        <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm mt-2">
+          <li>注册账户标识（邮箱地址）用于账户管理与找回密码。</li>
+          <li>当前订阅套餐的生效周期与剩余总流量计数。</li>
+          <li>用于生成客户端安全连接的随机加密令牌（Token）。</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">3. 数据安全与物理专线隔离</h3>
+        <p>
+          我们的专线节点部署于国际 Tier-4 认证机房，专线链路经由物理层隔离技术传输，隔绝公网监听与未授权拦截。
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">4. 联系我们的隐私专员</h3>
+        <p>
+          如您对本隐私政策或个人数据安全有任何疑问，请随时通过工单或邮件联系我们的安全合规团队：<code class="text-primary">{siteConfig.mail}</code>。
+        </p>
+      </div>
+
+    </div>
+  </section>
+</Layout>

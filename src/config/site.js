@@ -1,48 +1,203 @@
-// Get site URL from environment variable, use default value if not set
-// Note: Please set the correct PUBLIC_SITE_URL in .env file after first deployment
-const SITE_URL = import.meta.env.PUBLIC_SITE_URL || 'https://ricoui.com';
+// Site Configuration for NordVPN Official Partner Landing Page
+const SITE_URL = import.meta.env.PUBLIC_SITE_URL || 'https://nordvpn.help';
+
+// 统一注册转化链接（全站统一，附带 rel="nofollow noopener noreferrer" 防止权重流失）
+export const REGISTER_URL = 'https://sahude.gsyvipaff.com/#/?code=keqgvT5Y';
 
 export const siteConfig = {
-	title: "RicoFast",
-	author: "RicoUI",
+	title: "NordVPN — 官方授权全球专线网络 | 企业级 IEPL 专线 & VLESS 高速节点",
+	name: "NordVPN",
+	subTitle: "官方授权全球专线网络",
+	author: "NordVPN 官方授权服务站",
 	url: SITE_URL,
-	mail: "hello@ricoui.com",
-	utm: {
-		source: `${SITE_URL}`,
-		medium: "referral",
-		campaign: "navigation",
-	},
-	meta:{
-		title: "RicoFast — A design-led SaaS template for Astro",
-		description: "A polished, open-source SaaS template built with Astro and Tailwind CSS. Modular sections, dark mode, and a documented design system.",
-		keywords: "saas template, astro template, tailwind template, startup website, landing page, indie hacker",
+	mail: "support@nordvpn.help",
+	registerUrl: REGISTER_URL,
+	meta: {
+		title: "NordVPN — 官方授权全球专线网络 | 企业级 IEPL 专线 & VLESS 极速节点",
+		description: "NordVPN 品牌官方授权专线服务站（nordvpn.help），自2020年稳定运营。全节点 IEPL 企业内网专线与 VLESS 协议，原生住宅IP，单节点最高2.5Gbps，不限并发设备。完美解锁 ChatGPT / Claude 等 AI 工具及 Netflix / Disney+ / TikTok，晚高峰超低延迟，低至 8.25 元/月起。",
+		keywords: "NordVPN, NordVPN官网, NordVPN机场, IEPL专线, VLESS协议, 机场节点, 跨境电商专线, TikTok直播专线, ChatGPT解锁, Netflix解锁, 科学上网, 翻墙机场, 稳定机场, nordvpn.help",
 		image: `${SITE_URL}/og.jpg`,
-		twitterHandle: "",
+		twitterHandle: "NordVPN",
 	},
-	// social links
-	social:{
-		twitter: "http://x.com/ricouii/",
-		twitterName: "RicoUI",
-		github: "https://github.com/ricocc/ricoui-saas-template",
-		blog: "https://ricoui.com",
+	highlights: [
+		{ label: "运营历史", value: "2020年稳定运营" },
+		{ label: "骨干专线", value: "企业级 IEPL 专线" },
+		{ label: "抗封锁协议", value: "VLESS 原生协议" },
+		{ label: "起步门槛", value: "低至 ¥8.25/月" },
+		{ label: "应用解锁", value: "AI 工具 & 流媒体 4K" },
+		{ label: "客户端支持", value: "自研客户端 + 第三方订阅" },
+	],
+	social: {
+		telegram: "https://t.me/nordvpn_help",
+		status: "/status",
+		docs: "/blog",
+		register: REGISTER_URL,
+	},
+	// 搜索引擎站长平台所有权验证（预留安全接入点，支持环境变量注入或直接填入）
+	verification: {
+		google: import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || "",
+		bing: import.meta.env.PUBLIC_BING_SITE_VERIFICATION || "",
+		baidu: import.meta.env.PUBLIC_BAIDU_SITE_VERIFICATION || "",
+		shenma: import.meta.env.PUBLIC_SHENMA_SITE_VERIFICATION || "",
 	},
 };
 
-// Footer
+// 官方认证套餐配置（与首页和定价页共享，保证真实透明）
+export const pricingPlans = [
+	{
+		id: "snooker-147",
+		name: "致敬斯诺克147永久套餐",
+		badge: "永久有效 · 一次付费",
+		popular: false,
+		price: "147",
+		priceUnit: "元",
+		billingCycle: "一次性永久版无忧过期",
+		monthlyEquivalent: "永久无月租",
+		traffic: "247 GB",
+		trafficDesc: "永久版总流量（不限时，用完为止）",
+		lineType: "原生稳定节点 · 单节点最高 2.5Gbps",
+		devices: "不限设备同时在线",
+		nodeCoverage: "香港×20、台湾×5、日本×10、新加坡×10、美国×10、马来西亚×2、英国、法国、德国、土耳其、泰国、巴西等全球节点",
+		suitableFor: "办公、邮件、资料查询、即时聊天、轻度视频流",
+		unlockCapabilities: "跨境电商｜TikTok 直播｜社媒投放/推广｜远程办公/内网访问 等高要求业务",
+		discountInfo: "限量特惠 · 资源买断不折上折",
+		features: [
+			{ text: "247GB 永久流量（无过期时间）", included: true },
+			{ text: "单节点最高 2.5Gbps 高速带宽", included: true },
+			{ text: "不限客户端同时在线数量", included: true },
+			{ text: "覆盖港/台/日/新/美/英/法/德/土/巴等", included: true },
+			{ text: "解锁跨境电商、TikTok 直播与海外社媒", included: true },
+			{ text: "提供自研客户端及 Clash/Shadowrocket 导入", included: true },
+			{ text: "适合日常长期备用与外贸办公", included: true },
+		],
+		ctaText: "立即购买永久版",
+	},
+	{
+		id: "light",
+		name: "轻量版",
+		badge: "年付超值 · 入门首选",
+		popular: false,
+		price: "99",
+		priceUnit: "元 / 年",
+		billingCycle: "年付（折合约 8.25 元/月）",
+		monthlyEquivalent: "¥8.25 / 月 (年付折算)",
+		traffic: "69 GB / 月",
+		trafficDesc: "每月自动重置 69GB 极速流量",
+		lineType: "原生稳定节点 · 全局 BGP 优化接入",
+		devices: "不限设备同时在线",
+		nodeCoverage: "香港、台湾、日本、新加坡、马来西亚、美国、德国、法国、英国、土耳其、越南",
+		suitableFor: "日常办公、邮件收发、资料查阅、学术研究、轻度流媒体视频",
+		unlockCapabilities: "Netflix / Disney+ / ChatGPT / TikTok 基础解锁",
+		discountInfo: "官方年付让利 · 折合仅 8.25 元/月",
+		features: [
+			{ text: "每月 69GB 高速流量（每月自动刷新）", included: true },
+			{ text: "折合仅 8.25 元/月（年付 99 元）", included: true },
+			{ text: "原生稳定节点矩阵，延迟低至 35ms", included: true },
+			{ text: "支持多设备同时连接不限速", included: true },
+			{ text: "完美支持 ChatGPT / Claude 与主流流媒体", included: true },
+			{ text: "自研客户端 + 通用订阅链接双支持", included: true },
+			{ text: "7×12 小时在线客服技术响应", included: true },
+		],
+		ctaText: "开通轻量版",
+	},
+	{
+		id: "speed",
+		name: "极速版",
+		badge: "最受欢迎 · 官方主力推荐",
+		popular: true,
+		price: "25",
+		priceUnit: "元 / 月",
+		billingCycle: "支持月付 / 半年付 / 年付",
+		monthlyEquivalent: "年付仅需 ¥20 / 月",
+		traffic: "168 GB / 月",
+		trafficDesc: "每月 168GB 纯 IPLC/IEPL 专线流量",
+		lineType: "全球 IPLC / IEPL 专线 · 单节点最高 2.5Gbps",
+		devices: "不限设备同时在线",
+		nodeCoverage: "香港、台湾、日本、新加坡、马来西亚、美国、德国、法国、英国、土耳其、越南",
+		suitableFor: "4K/8K 视频播放、AI 深度会话、高频跨境贸易、海量下载与晚高峰游戏加速",
+		unlockCapabilities: "全平台解锁：Netflix / Disney+ / ChatGPT / Claude / TikTok / Midjourney",
+		discountInfo: "半年付 9 折 / 年付 8 折 (¥240/年) / 两年 75 折 / 三年 7 折",
+		features: [
+			{ text: "每月 168GB 全内网专线流量", included: true },
+			{ text: "全节点倍率固定 ×1（无隐藏暗扣倍率）", included: true },
+			{ text: "单节点最高 2.5Gbps，晚高峰稳如磐石", included: true },
+			{ text: "全内网专线直连，超低抖动与丢包", included: true },
+			{ text: "多周期阶梯折扣：年付享 8 折优惠", included: true },
+			{ text: "全面解锁 ChatGPT、Claude 及全球 4K 流媒体", included: true },
+			{ text: "7×24 小时全天候专属专线运维监控", included: true },
+		],
+		ctaText: "立即开通极速版",
+	},
+	{
+		id: "custom",
+		name: "定制版",
+		badge: "企业专享 · 独享原生IP",
+		popular: false,
+		price: "680",
+		priceUnit: "元 / 月",
+		billingCycle: "按月订阅 / 线下对接部署",
+		monthlyEquivalent: "独享带宽与专属原生IP",
+		traffic: "500 GB / 月",
+		trafficDesc: "500GB 独享 IPLC 专线流量（可按需扩容）",
+		lineType: "全 IPLC 专线接入 · 专属物理带宽 · 原生独立 IP",
+		devices: "不限客户端数量，多端同时在线无门槛",
+		nodeCoverage: "按需独立部署：香港、日本、美国、新加坡等全球核心数据中心灵活配置",
+		suitableFor: "跨境电商团队运营、TikTok 高清直播推流、跨境大额社媒投放、远程企业内网安全互通",
+		unlockCapabilities: "跨境电商｜TikTok 直播｜社媒投放/推广｜远程办公/内网访问 等高要求业务",
+		discountInfo: "独享高成本物理专线资源，不打折",
+		features: [
+			{ text: "分配专属原生 IP 与独立带宽，物理隐私隔离", included: true },
+			{ text: "全 IPLC 物理专线，超低时延与最高级别 SLA 架构", included: true },
+			{ text: "单节点最高 2.5Gbps，长时稳定不掉帧", included: true },
+			{ text: "不限客户端数量，适合团队协同", included: true },
+			{ text: "流量、带宽、地区与线路类型一对一按需定制", included: true },
+			{ text: "一对一专属技术管家，7×24 极速响应", included: true },
+			{ text: "提供合规发票与对公结算支持", included: true },
+		],
+		ctaText: "咨询定制开通",
+	},
+];
+
+// Footer 友情链接与系统导航
+export const footerLinks = {
+	product: [
+		{ name: "套餐与价格", url: "/#pricing" },
+		{ name: "IEPL 专线优势", url: "/features" },
+		{ name: "客户端下载", url: "/sign-up" },
+		{ name: "节点实时状态", url: "/status" },
+		{ name: "立即注册开通", url: REGISTER_URL, external: true },
+	],
+	resources: [
+		{ name: "使用教程与指南", url: "/blog" },
+		{ name: "常见问题 FAQ", url: "/#faq" },
+		{ name: "Clash 配置教程", url: "/blog/clash-shadowrocket-setup" },
+		{ name: "ChatGPT 访问指南", url: "/blog/chatgpt-claude-ip-guide" },
+		{ name: "更新日志", url: "/changelog" },
+	],
+	company: [
+		{ name: "关于我们", url: "/about" },
+		{ name: "官方授权说明", url: "/about#authorization" },
+		{ name: "服务支持与联系", url: "/contact" },
+	],
+	legal: [
+		{ name: "隐私政策 (Privacy Policy)", url: "/privacy" },
+		{ name: "服务条款 (Terms of Service)", url: "/terms" },
+		{ name: "SLA 服务保障", url: "/features#sla" },
+	],
+};
+
 export const socialLinks = [
 	{
-		name: 'Twitter',
-		url: 'https://x.com/ricouii',
-		  icon: `<svg class="ic-twitter icon" width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1684 408q-67 98-162 167 1 14 1 42 0 130-38 259.5t-115.5 248.5-184.5 210.5-258 146-323 54.5q-271 0-496-145 35 4 78 4 225 0 401-138-105-2-188-64.5t-114-159.5q33 5 61 5 43 0 85-11-112-23-185.5-111.5t-73.5-205.5v-4q68 38 146 41-66-44-105-115t-39-154q0-88 44-163 121 149 294.5 238.5t371.5 99.5q-8-38-8-74 0-134 94.5-228.5t228.5-94.5q140 0 236 102 109-21 205-78-37 115-142 178 93-10 186-50z" fill="currentColor"></path></svg>`
+		name: '注册直达',
+		url: REGISTER_URL,
+		external: true,
 	},
 	{
-		name: 'Github',
-		url: 'https://github.com/ricocc/ricoui-saas-template',
-		icon: `<svg t="1730125604816" class="icon ic-github ic-social" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12741" width="256" height="256"><path d="M511.957333 21.333333C241.024 21.333333 21.333333 240.981333 21.333333 512c0 216.832 140.544 400.725333 335.573334 465.664 24.490667 4.394667 32.256-10.069333 32.256-23.082667 0-11.690667 0.256-44.245333 0-85.205333-136.448 29.610667-164.736-64.64-164.736-64.64-22.314667-56.704-54.4-71.765333-54.4-71.765333-44.586667-30.464 3.285333-29.824 3.285333-29.824 49.194667 3.413333 75.178667 50.517333 75.178667 50.517333 43.776 75.008 114.816 53.333333 142.762666 40.789333 4.522667-31.658667 17.152-53.376 31.189334-65.536-108.970667-12.458667-223.488-54.485333-223.488-242.602666 0-53.546667 19.114667-97.322667 50.517333-131.669334-5.034667-12.330667-21.930667-62.293333 4.778667-129.834666 0 0 41.258667-13.184 134.912 50.346666a469.802667 469.802667 0 0 1 122.88-16.554666c41.642667 0.213333 83.626667 5.632 122.88 16.554666 93.653333-63.488 134.784-50.346667 134.784-50.346666 26.752 67.541333 9.898667 117.504 4.864 129.834666 31.402667 34.346667 50.474667 78.122667 50.474666 131.669334 0 188.586667-114.730667 230.016-224.042666 242.090666 17.578667 15.232 33.578667 44.672 33.578666 90.453334v135.850666c0 13.141333 7.936 27.605333 32.853334 22.869334C862.250667 912.597333 1002.666667 728.746667 1002.666667 512 1002.666667 240.981333 783.018667 21.333333 511.957333 21.333333z" p-id="12742"></path></svg>`
+		name: '服务状态',
+		url: '/status',
 	},
 	{
-		name: 'RSS',
-		url: '/rss.xml',
-		icon: `<svg t="1730123988138" class="icon ic-rss ic-social " viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="11766" width="256" height="256"><path d="M329.143 768q0 45.714-32 77.714t-77.714 32-77.715-32-32-77.714 32-77.714 77.715-32 77.714 32 32 77.714z m292.571 70.286q1.143 16-9.714 27.428-10.286 12-26.857 12H508q-14.286 0-24.571-9.428T472 844.57q-12.571-130.857-105.429-223.714T142.857 515.43q-14.286-1.143-23.714-11.429t-9.429-24.571v-77.143q0-16.572 12-26.857 9.715-9.715 24.572-9.715h2.857q91.428 7.429 174.857 46T472 515.43q65.143 64.571 103.714 148t46 174.857z m292.572 1.143q1.143 15.428-10.286 26.857-10.286 11.428-26.286 11.428H796q-14.857 0-25.429-10T759.43 843.43Q752.57 720.57 701.714 610T569.43 418t-192-132.286T144 227.43q-14.286-0.572-24.286-11.143t-10-24.857v-81.715q0-16 11.429-26.285 10.286-10.286 25.143-10.286H148q149.714 7.428 286.571 68.571t243.143 168q106.857 106.286 168 243.143t68.572 286.572z" p-id="11767"></path></svg>`
+		name: '帮助中心',
+		url: '/contact',
 	},
 ];

@@ -1,38 +1,25 @@
 {
-	"name": "ricoui-saas-template",
+	"name": "nordvpn-help",
 	"type": "module",
 	"version": "1.0.0",
 	"packageManager": "pnpm@9.14.2",
-	"description": "A design-led SaaS website template built with Astro, Tailwind CSS v4, MDX, and a reusable component system.",
+	"description": "NordVPN 官方授权专线网络官网落地页 (nordvpn.help) - 企业级 IEPL 专线 & VLESS 极速节点",
 	"keywords": [
-		"astro",
-		"astro-template",
-		"saas",
-		"saas-template",
+		"nordvpn",
+		"nordvpn-help",
+		"iepl",
+		"vless",
 		"landing-page",
-		"startup",
+		"astro",
 		"tailwindcss",
-		"tailwindcss-v4",
-		"mdx",
-		"blog",
-		"changelog",
-		"dark-mode",
-		"responsive",
-		"typescript"
+		"saas"
 	],
 	"author": {
-		"name": "RicoUI",
-		"email": "hello@ricoui.com",
-		"url": "https://ricoui.com"
+		"name": "NordVPN 官方授权服务站",
+		"email": "support@nordvpn.help",
+		"url": "https://nordvpn.help"
 	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/ricocc/ricoui-saas-template.git"
-	},
-	"bugs": {
-		"url": "https://github.com/ricocc/ricoui-saas-template/issues"
-	},
-	"homepage": "https://github.com/ricocc/ricoui-saas-template#readme",
+	"homepage": "https://nordvpn.help",
 	"license": "MIT",
 	"engines": {
 		"node": ">=22.12.0",

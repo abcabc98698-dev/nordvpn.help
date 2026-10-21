@@ -1,2 +1,24 @@
 User-agent: *
 Allow: /
+Disallow: /elements/
+Disallow: /signin/
+Disallow: /signup/
+
+User-agent: Googlebot
+Allow: /
+Disallow: /elements/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /elements/
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /elements/
+
+User-agent: yisouspider
+Allow: /
+Disallow: /elements/
+
+Sitemap: https://nordvpn.help/sitemap.xml
+Sitemap: https://nordvpn.help/sitemap-index.xml

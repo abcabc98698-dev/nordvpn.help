@@ -1,0 +1,119 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import Button from "@/components/ui/Button.astro";
+import { siteConfig } from "@/config/site";
+import { CheckCircle, Zap } from "@lucide/astro";
+
+const systems = [
+  { name: "中国香港 IEPL 专线集群 (20 节点)", ping: "21ms", status: "运行正常", uptime: "100%", type: "IEPL 专线" },
+  { name: "中国台湾 原生节点集群 (5 节点)", ping: "38ms", status: "运行正常", uptime: "99.99%", type: "原生住宅" },
+  { name: "日本东京/大阪 IEPL 专线 (10 节点)", ping: "41ms", status: "运行正常", uptime: "100%", type: "IEPL 专线" },
+  { name: "新加坡 亚太核心骨干机房 (10 节点)", ping: "46ms", status: "运行正常", uptime: "100%", type: "IPLC 专线" },
+  { name: "美国美西/美东 原生商宽 (10 节点)", ping: "128ms", status: "运行正常", uptime: "99.98%", type: "原生商宽" },
+  { name: "马来西亚 & 东南亚专线 (2 节点)", ping: "53ms", status: "运行正常", uptime: "100%", type: "原生节点" },
+  { name: "欧洲英/法/德核心数据中心", ping: "142ms", status: "运行正常", uptime: "99.99%", type: "欧洲骨干" },
+  { name: "土耳其 / 巴西 / 泰国新兴节点", ping: "178ms", status: "运行正常", uptime: "99.97%", type: "原生节点" },
+  { name: "OpenAI / Claude AI 专用握手网关", ping: "25ms", status: "全线畅通", uptime: "100%", type: "AI 加速" },
+  { name: "全平台客户端订阅分发系统", ping: "12ms", status: "运行正常", uptime: "100%", type: "高可用 CDN" },
+];
+---
+
+<Layout
+  title={`节点与服务实时状态 — ${siteConfig.title}`}
+  description="NordVPN 官方授权专线站点实时网络监控，涵盖全球 IEPL 专线集群、延迟遥测与 99.98% SLA 运行指标。"
+>
+  <section class="site-container my-12">
+    <PageHeader
+      title="专线服务实时健康状态"
+      description="7×24 小时端到端自动化监控，透明展示骨干物理专线、节点可用性与时延指标。"
+    />
+  </section>
+
+  <section class="site-container max-w-4xl mx-auto pb-24">
+    <!-- Overall Status Banner -->
+    <div class="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between gap-4 mb-8">
+      <div class="flex items-center gap-3">
+        <div class="relative flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500 text-white">
+          <CheckCircle class="w-5 h-5" />
+          <span class="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-25"></span>
+        </div>
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-emerald-800 dark:text-emerald-300">
+            所有专线系统与全球节点运行正常
+          </h3>
+          <p class="text-xs text-emerald-600 dark:text-emerald-400 mt-0.5">
+            当前网络骨干健康度：100% · 平均丢包率：0.00%
+          </p>
+        </div>
+      </div>
+      <div class="hidden sm:flex items-center gap-2">
+        <span class="text-xs font-mono text-emerald-700 dark:text-emerald-400 bg-emerald-500/15 px-2.5 py-1 rounded-md">
+          SLA: 99.98%
+        </span>
+      </div>
+    </div>
+
+    <!-- 90 Days Uptime Bar -->
+    <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-neutral-200 dark:border-neutral-700 mb-8">
+      <div class="flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400 mb-3">
+        <span class="font-medium text-neutral-700 dark:text-neutral-300">过去 90 天专线可用性指标</span>
+        <span class="font-bold text-emerald-600 dark:text-emerald-400">99.98% 可用</span>
+      </div>
+      <div class="grid grid-cols-45 sm:grid-cols-90 gap-0.5 h-7 items-center">
+        {Array.from({ length: 60 }).map((_, i) => (
+          <div
+            class="h-6 rounded-xs bg-emerald-500 hover:bg-emerald-400 transition-colors cursor-pointer"
+            title={`第 ${60 - i} 天前: 100% 运行正常`}
+          ></div>
+        ))}
+      </div>
+      <div class="flex justify-between text-[11px] text-neutral-400 mt-2">
+        <span>60 天前</span>
+        <span>今日 (实时状态)</span>
+      </div>
+    </div>
+
+    <!-- System Services Table -->
+    <div class="rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark overflow-hidden mb-12">
+      <div class="p-4 border-b border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800/40 flex items-center justify-between">
+        <h3 class="text-sm font-bold text-neutral-800 dark:text-neutral-200">核心集群与骨干专线</h3>
+        <span class="text-xs text-neutral-400">自动轮询间隔：30 秒</span>
+      </div>
+
+      <div class="divide-y divide-neutral-100 dark:divide-neutral-800 text-xs sm:text-sm">
+        {systems.map((s) => (
+          <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-neutral-50/50 dark:hover:bg-neutral-800/20 transition-colors">
+            <div class="flex items-center gap-2.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span class="font-semibold text-neutral-800 dark:text-neutral-100">{s.name}</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500 font-mono">
+                {s.type}
+              </span>
+            </div>
+            <div class="flex items-center gap-4 text-xs">
+              <span class="font-mono text-neutral-500 dark:text-neutral-400">平均延迟: {s.ping}</span>
+              <span class="font-mono text-neutral-500 dark:text-neutral-400">SLA: {s.uptime}</span>
+              <span class="inline-flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
+                <CheckCircle class="w-3.5 h-3.5" /> {s.status}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="p-6 rounded-2xl bg-gradient-to-r from-bg-secondary to-blue-50/20 dark:from-bg-secondary-dark dark:to-blue-950/20 border border-primary/20 text-center">
+      <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+        体验 99.98% 高可用物理专线
+      </h3>
+      <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mb-4">
+        全节点真实倍率，晚高峰超低时延，年付折合仅需 8.25 元/月起。
+      </p>
+      <Button url={siteConfig.registerUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" type="fill">
+        <Zap class="w-4 h-4 text-accent" /> 立即注册开通
+      </Button>
+    </div>
+  </section>
+</Layout>

@@ -162,32 +162,53 @@ window.applyMenuItemClasses = () => {
 };
 
 function mobileMenuFunctionality() {
-	document.getElementById("openMenu").addEventListener("click", () => {
-		openMobileMenu();
-	});
-
-	document.getElementById("closeMenu").addEventListener("click", () => {
-		closeMobileMenu();
-	});
+	const openBtn = document.getElementById("openMenu");
+	const closeBtn = document.getElementById("closeMenu");
+	if (openBtn) {
+		openBtn.onclick = () => {
+			if (typeof window.openMobileMenu === "function") {
+				window.openMobileMenu();
+			}
+		};
+	}
+	if (closeBtn) {
+		closeBtn.onclick = () => {
+			if (typeof window.closeMobileMenu === "function") {
+				window.closeMobileMenu();
+			}
+		};
+	}
 }
 
 window.openMobileMenu = () => {
-	document.getElementById("openMenu").classList.add("hidden");
-	document.getElementById("closeMenu").classList.remove("hidden");
-	document.getElementById("menu").classList.remove("hidden");
-	document.getElementById("mobileMenuBackground").classList.add("opacity-0");
-	document.getElementById("mobileMenuBackground").classList.remove("hidden");
+	const openMenu = document.getElementById("openMenu");
+	const closeMenu = document.getElementById("closeMenu");
+	const menu = document.getElementById("menu");
+	const mobileMenuBackground = document.getElementById("mobileMenuBackground");
+
+	openMenu?.classList.add("hidden");
+	closeMenu?.classList.remove("hidden");
+	closeMenu?.classList.add("flex");
+	menu?.classList.remove("hidden");
+	mobileMenuBackground?.classList.add("opacity-0");
+	mobileMenuBackground?.classList.remove("hidden");
+	document.body.style.overflow = "hidden";
 
 	setTimeout(() => {
-		document
-			.getElementById("mobileMenuBackground")
-			.classList.remove("opacity-0");
+		mobileMenuBackground?.classList.remove("opacity-0");
 	}, 1);
 };
 
 window.closeMobileMenu = () => {
-	document.getElementById("closeMenu").classList.add("hidden");
-	document.getElementById("openMenu").classList.remove("hidden");
-	document.getElementById("menu").classList.add("hidden");
-	document.getElementById("mobileMenuBackground").classList.add("hidden");
+	const openMenu = document.getElementById("openMenu");
+	const closeMenu = document.getElementById("closeMenu");
+	const menu = document.getElementById("menu");
+	const mobileMenuBackground = document.getElementById("mobileMenuBackground");
+
+	closeMenu?.classList.add("hidden");
+	closeMenu?.classList.remove("flex");
+	openMenu?.classList.remove("hidden");
+	menu?.classList.add("hidden");
+	mobileMenuBackground?.classList.add("hidden");
+	document.body.style.overflow = "";
 };

@@ -1,0 +1,50 @@
+---
+title: "Clash Verge 与 Shadowrocket 小火箭订阅配置与一键导入教程"
+description: "详细图文指南：如何在 Windows、macOS、iOS 与 Android 平台一键导入 NordVPN 官方专线订阅，并配置智能分流与低延迟规则。"
+publishDate: 2026-01-15
+read: 6
+tags: ["使用教程", "客户端配置", "Clash", "Shadowrocket"]
+img: "/assets/article-cover.jpg"
+img_alt: "Clash 与 Shadowrocket 专线配置教程"
+featured: true
+---
+
+对于追求高自由度与智能分流的高阶用户，NordVPN 官方授权专线站（nordvpn.help）除了提供一键即用的跨平台自研客户端外，还完整兼容主流第三方开源客户端。本文将详细指引如何在各平台快速配置并开启智能路由分流。
+
+## 一、获取您的专属专线订阅链接
+
+1. 登录 <a href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" target="_blank" rel="nofollow sponsored noopener noreferrer">NordVPN 用户管理控制台</a>。
+2. 在用户中心仪表盘中，找到 **“快捷订阅”** 区域。
+3. 根据您所使用的客户端类型，点击复制 **“一键导入 Clash 订阅”** 或 **“复制通用通用聚合订阅链接”**。
+
+> **提示：** 订阅链接属于您个人的专线凭据，内含专属加密 Token，请勿随意将链接分享给他人，以保障个人网络带宽与隐私安全。
+
+---
+
+## 二、iOS 平台：Shadowrocket（小火箭）导入指引
+
+1. 打开 Shadowrocket 应用，点击右上角的 **“+”** 加号。
+2. 在 **类型 (Type)** 下拉菜单中选择 **“Subscribe”**。
+3. 在 **URL** 输入框中，粘贴刚才在用户后台复制的订阅链接。
+4. 在 **备注 (Remark)** 中填写 `NordVPN 官方专线`，点击右上角 **“保存 (Done)”**。
+5. 首页将自动拉取并刷新专线节点列表，包含中国香港、中国台湾、日本、新加坡、美国等多地 IEPL 专线。
+6. 全局路由建议选择 **“配置 (Config)”**，即可实现国内网站直连、海外服务走专线的高速分流。
+
+---
+
+## 三、Windows & macOS：Clash Verge Rev 导入指引
+
+1. 下载并安装最新版 **Clash Verge Rev** 客户端。
+2. 启动应用后进入左侧 **“订阅 (Profiles)”** 界面。
+3. 在上方输入框中粘贴专线订阅链接，点击 **“导入 (Import)”** 按钮。
+4. 订阅下载完成后，右键选中该配置并切换为 **“启用 (Use)”**。
+5. 进入 **“代理 (Proxies)”** 界面，节点组选择 **“规则 (Rule)”** 模式，即可根据网络健康度自动选择最优延迟节点（如香港 IEPL 专线）。
+6. 系统代理开关切换为 **开启 (System Proxy)**，即可畅享极速网络。
+
+---
+
+## 四、核心优化建议：AI 与流媒体节点选择
+
+- **OpenAI / Claude 对话：** 建议优先选择带有 `原生IP` 或 `ChatGPT` 标识的美国、日本、新加坡节点。
+- **4K / 8K 流媒体播放：** 推荐选择时延低于 25ms 的中国香港 IEPL 专线或日本东京节点。
+- **TikTok 直播出海：** 建议选用对应目标市场的原生机房节点（如美国美西或东南亚专属节点）。

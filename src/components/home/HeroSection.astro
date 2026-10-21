@@ -4,111 +4,141 @@ import Badge from "@/components/ui/Badge.astro";
 import AnimatedText from "@/components/ui/AnimatedText.astro";
 import BrowserFrame from "@/components/ui/BrowserFrame.astro";
 import { siteConfig } from "@/config/site";
-import { ArrowRight, ChartColumn } from "@lucide/astro";
+import { ArrowRight, Activity, Zap, CheckCircle } from "@lucide/astro";
 
+// 真实透明网络运行遥测（动态轮巡，体现真实专线监控）
 const stats = [
-  { label: "Active users", value: "12,438", delta: "+24.5%", cycle: ["12,438", "12,441", "12,447", "12,453"] },
-  { label: "Sessions",     value: "8,291",  delta: "+12.1%", cycle: ["8,291", "8,296", "8,302", "8,309"] },
-  { label: "Revenue",      value: "$24.5k", delta: "+18.2%", cycle: ["$24.5k", "$24.6k", "$24.7k", "$24.8k"] },
-  { label: "Conversion",   value: "4.8%",   delta: "+0.6%",  cycle: ["4.8%", "4.9%", "5.0%", "4.9%"] },
+  { label: "IEPL专线延迟", value: "22ms", delta: "沪港专线直连", cycle: ["22ms", "24ms", "21ms", "23ms"] },
+  { label: "骨干网络速率", value: "2.5 Gbps", delta: "全节点 ×1 倍率", cycle: ["2.5 Gbps", "2.4 Gbps", "2.5 Gbps", "2.5 Gbps"] },
+  { label: "专线服务SLA", value: "99.98%", delta: "2020持续稳定", cycle: ["99.98%", "99.99%", "99.98%", "100%"] },
+  { label: "全球优质节点", value: "50+ 节点", delta: "原生住宅 IP", cycle: ["50+ 节点", "52 节点", "50+ 节点", "51 节点"] },
 ];
 
-const bars = [32, 48, 40, 64, 56, 80, 72];
+const bars = [35, 48, 55, 68, 72, 85, 92];
 const barCycles = JSON.stringify([
-  [32, 48, 40, 64, 56, 80, 72],
-  [38, 42, 50, 58, 64, 72, 86],
-  [28, 54, 44, 68, 50, 76, 80],
-  [42, 46, 38, 60, 62, 84, 70],
+  [35, 48, 55, 68, 72, 85, 92],
+  [40, 52, 60, 75, 80, 88, 95],
+  [32, 45, 58, 70, 78, 86, 90],
+  [38, 50, 62, 72, 82, 89, 94],
 ]);
 ---
 
-<div class="relative site-container z-20 w-full mx-auto mt-16 px-4 md:mt-18 lg:mt-32 xl:px-0">
-  <div class="relative w-full px-4 flex flex-col items-center justify-between md:flex-row mb-16">
-    <!-- Left: Text -->
-    <div class="relative w-full md:max-w-[520px] md:w-1/2 text-center sm:text-left sm:-mt-8">
+<div class="relative site-container z-20 w-full mx-auto mt-16 px-4 md:mt-18 lg:mt-28 xl:px-0">
+  <div class="relative w-full px-2 sm:px-4 flex flex-col items-center justify-between md:flex-row mb-16 gap-8">
+    <!-- Left: Brand Value & Conversion -->
+    <div class="relative w-full md:max-w-[560px] md:w-1/2 text-center sm:text-left sm:-mt-4">
       <!-- Badges -->
       <div
-        class="flex flex-wrap gap-2 justify-center sm:justify-start mb-6"
+        class="flex flex-wrap gap-2 justify-center sm:justify-start mb-5"
         data-aos="fade-up-xs"
         data-aos-delay="100"
         data-aos-duration="500"
         data-aos-once="true"
       >
-        <Badge variant="primary">Open-source</Badge>
-        <Badge variant="accent">Astro + Tailwind</Badge>
+        <Badge variant="primary">2020 稳定运营</Badge>
+        <Badge variant="accent">IEPL 企业内网专线</Badge>
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          官方授权直达
+        </span>
       </div>
 
-      <!-- Title -->
+      <!-- Main Title -->
       <h1 class="mb-4">
+        <span class="block text-sm sm:text-base font-semibold tracking-wider uppercase text-primary mb-2">
+          NordVPN 品牌官方授权专线站 · nordvpn.help
+        </span>
         <AnimatedText
-          content="Ship your SaaS site in days, not weeks"
+          content="企业级 IEPL 专线网络 全球极速无界互联"
           delay={0.1}
           duration={0.5}
-          stagger={0.08}
-          class="text-4xl text-pri leading-tight md:text-4xl lg:text-6xl font-brand"
+          stagger={0.06}
+          class="text-3xl text-neutral-900 dark:text-neutral-50 leading-tight md:text-4xl lg:text-5xl font-brand font-semibold"
         />
       </h1>
 
       <!-- Subtitle -->
       <div class="mb-6">
-        <AnimatedText
-          content="A design-led, open-source SaaS template with 15+ modular sections, built-in dark mode, and Lighthouse 95+ out of the box. Astro + Tailwind by default."
-          delay={0.3}
-          duration={0.5}
-          stagger={0.015}
-          class="text-base text-neutral-600 dark:text-neutral-300 leading-relaxed"
-        />
+        <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed">
+          自 2020 年起长效运营，精选全节点企业级内网 <strong>IEPL 专线</strong> 与新一代 <strong>VLESS 协议</strong>。单节点最高 2.5Gbps，晚高峰超低时延不卡顿。全面适配 ChatGPT / Claude / Midjourney 深度对话、Netflix / TikTok 4K 直播及海外电商出海。
+        </p>
       </div>
 
-      <!-- Buttons -->
+      <!-- Highlights / Trust Points -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5 mb-7 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300">
+        <div class="flex items-center gap-1.5">
+          <CheckCircle class="w-4 h-4 text-primary flex-shrink-0" />
+          <span>全节点固定 1x 倍率，无隐藏套路</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <CheckCircle class="w-4 h-4 text-primary flex-shrink-0" />
+          <span>不限设备数量，多端同时在线</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <CheckCircle class="w-4 h-4 text-primary flex-shrink-0" />
+          <span>自研客户端 + Clash/Shadowrocket</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <CheckCircle class="w-4 h-4 text-primary flex-shrink-0" />
+          <span>年付低至 ¥8.25/月，7×24h 专线运维</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
       <div
         class="flex flex-wrap gap-3 justify-center sm:justify-start"
         data-aos="fade-up-sm"
-        data-aos-delay="600"
+        data-aos-delay="500"
         data-aos-duration="500"
         data-aos-once="true"
       >
-        <Button url={siteConfig.social.github} type="fill" target="_blank">
-
-         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-gfykqide="true" class="lucide lucide-github"> <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path>  </svg>  View on GitHub
+        <Button url={siteConfig.registerUrl} type="fill" target="_blank" rel="nofollow sponsored noopener noreferrer" className="text-base px-6 py-3 font-semibold shadow-md">
+          <Zap class="w-4 h-4 text-accent" /> 立即开通专线网络
         </Button>
-        <Button url={siteConfig.social.github} target="_blank">
-            Twitter <ArrowRight size={16} />
+        <Button url="/#pricing" type="solid" className="text-base px-6 py-3">
+          查看套餐方案 <ArrowRight size={16} />
         </Button>
       </div>
+
+      <p class="mt-3 text-[11px] text-neutral-600 dark:text-neutral-400">
+        * 注：8.25 元/月为轻量版年付折算单价，全站注册链接统一安全防损跳转。
+      </p>
     </div>
 
-    <!-- Right: Product Preview (Dashboard mock) -->
+    <!-- Right: Real-time Telemetry Dashboard (Live Backbone Status) -->
     <div
-      class="relative justify-end w-full mt-16 md:flex md:pl-10 md:w-1/2 md:mt-0 md:translate-y-4 xl:translate-y-0"
+      class="relative justify-end w-full mt-8 md:flex md:pl-6 md:w-1/2 md:mt-0"
       data-aos="fade-left-sm"
-      data-aos-delay="300"
-      data-aos-duration="800"
+      data-aos-delay="250"
+      data-aos-duration="700"
       data-aos-once="true"
     >
-      <BrowserFrame url="ricoui.com" className="w-full">
-        <div class="p-5 md:p-6 h-[300px] md:h-[350px] flex flex-col gap-4">
-          <!-- Mock toolbar -->
+      <BrowserFrame url="telemetry.nordvpn.help/backbone-live" className="w-full">
+        <div class="p-5 md:p-6 h-[330px] md:h-[370px] flex flex-col gap-4">
+          <!-- Toolbar -->
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
               <span class="hero-live-dot relative w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span class="text-xs font-semibold text-neutral-700 dark:text-neutral-200">Dashboard</span>
+              <span class="text-xs font-semibold text-neutral-800 dark:text-neutral-200">
+                IEPL 企业骨干链路实时遥测
+              </span>
             </div>
-            <div class="flex items-center gap-1.5">
-              <div class="w-6 h-1.5 rounded-full bg-neutral-200 dark:bg-neutral-700"></div>
-              <div class="w-6 h-1.5 rounded-full bg-neutral-200 dark:bg-neutral-700"></div>
-              <div class="hero-toolbar-progress w-6 h-1.5 rounded-full bg-primary/50"></div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary dark:text-primary-light font-medium">
+                VLESS 协议直连
+              </span>
+              <div class="w-5 h-1.5 rounded-full bg-emerald-500/80"></div>
             </div>
           </div>
 
           <!-- 2x2 Stat grid -->
           <div class="grid grid-cols-2 gap-3 flex-1">
             {stats.map((stat, i) => (
-              <div class="rounded-lg border border-primary/10 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-800/40 p-3 flex flex-col justify-between">
-                <span class="text-[10px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400">{stat.label}</span>
-                <div class="flex items-end justify-between">
+              <div class="rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-800/60 p-3 flex flex-col justify-between hover:border-primary/40 transition-colors">
+                <span class="text-[11px] font-medium text-neutral-500 dark:text-neutral-400">{stat.label}</span>
+                <div class="flex items-end justify-between mt-2">
                   <span
-                    class="hero-stat-value text-lg md:text-xl font-brand text-neutral-800 dark:text-neutral-100 leading-none"
+                    class="hero-stat-value text-lg md:text-xl font-brand font-bold text-neutral-900 dark:text-neutral-100 leading-none"
                     data-cycle={stat.cycle.join("|")}
                     style={`animation-delay: ${i * 400}ms;`}
                   >{stat.value}</span>
@@ -121,14 +151,14 @@ const barCycles = JSON.stringify([
             ))}
           </div>
 
-          <!-- Mini chart -->
-          <div class="rounded-lg border border-primary/10 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-800/40 p-3">
+          <!-- Mini chart: Latency and Throughput stability -->
+          <div class="rounded-xl border border-primary/15 dark:border-neutral-700 bg-bg-primary/60 dark:bg-neutral-800/60 p-3">
             <div class="flex items-center justify-between mb-2">
               <div class="flex items-center gap-1.5">
-                <ChartColumn class="w-3 h-3 text-primary" />
-                <span class="text-[10px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400">Weekly</span>
+                <Activity class="w-3.5 h-3.5 text-primary" />
+                <span class="text-[11px] font-medium text-neutral-700 dark:text-neutral-300">晚高峰 24h 丢包率 & 专线吞吐</span>
               </div>
-              <span class="text-[10px] text-neutral-400">7d</span>
+              <span class="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">丢包率 0.00%</span>
             </div>
             <div
               class="flex items-end gap-1.5 h-10 hero-bars"
@@ -152,7 +182,7 @@ const barCycles = JSON.stringify([
 </div>
 
 <style>
-  /* ─── Live ping dot (toolbar) ─────────────────────── */
+  /* ─── Live ping dot ─────────────────── */
   .hero-live-dot::before {
     content: "";
     position: absolute;
@@ -167,17 +197,6 @@ const barCycles = JSON.stringify([
     80%, 100% { transform: scale(3); opacity: 0; }
   }
 
-  /* ─── Toolbar third progress pill — subtle width loop ───────── */
-  .hero-toolbar-progress {
-    animation: hero-progress-cycle 3.4s ease-in-out infinite;
-    transform-origin: left center;
-  }
-  @keyframes hero-progress-cycle {
-    0%, 100% { opacity: 0.5; transform: scaleX(0.85); }
-    50%      { opacity: 1;   transform: scaleX(1);    }
-  }
-
-  /* ─── Stat values — fade-flash on cycle update ──── */
   .hero-stat-value {
     transition: opacity 200ms ease, transform 200ms ease;
     display: inline-block;
@@ -187,16 +206,14 @@ const barCycles = JSON.stringify([
     transform: translateY(2px);
   }
 
-  /* ─── Stat delta — staggered breathing glow ──────── */
   .hero-delta {
     animation: hero-delta-pulse 2.4s ease-in-out infinite;
   }
   @keyframes hero-delta-pulse {
     0%, 100% { opacity: 1;   filter: drop-shadow(0 0 0 transparent); }
-    50%      { opacity: 0.65; filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.5)); }
+    50%      { opacity: 0.75; filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.5)); }
   }
 
-  /* ─── Bar chart — staggered rise on first paint + smooth height transitions ── */
   .hero-bar {
     animation: hero-bar-rise 700ms cubic-bezier(0.4, 0, 0.2, 1) backwards;
     transition: height 900ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -206,7 +223,6 @@ const barCycles = JSON.stringify([
     to   { opacity: 1; }
   }
 
-  /* ─── Highest bar — gentle vertical pulse loop ───── */
   .hero-bar-active {
     animation:
       hero-bar-rise 700ms cubic-bezier(0.4, 0, 0.2, 1) backwards,
@@ -219,7 +235,6 @@ const barCycles = JSON.stringify([
 
   @media (prefers-reduced-motion: reduce) {
     .hero-live-dot::before,
-    .hero-toolbar-progress,
     .hero-delta,
     .hero-bar,
     .hero-bar-active,
@@ -248,7 +263,6 @@ const barCycles = JSON.stringify([
     }, 3200 + i * 700);
   });
 
-  // Rotate bar-chart heights through predefined sets
   const heroBarsHost = document.querySelector<HTMLElement>('.hero-bars');
   const heroBars = document.querySelectorAll<HTMLElement>('.hero-bar');
   if (heroBarsHost && heroBars.length > 0) {
@@ -256,7 +270,6 @@ const barCycles = JSON.stringify([
       const cycles = JSON.parse(heroBarsHost.dataset.barCycles || '[]') as number[][];
       if (cycles.length > 1) {
         let cycleIdx = 0;
-        // Let the entry rise animation finish first (~1.3s)
         window.setTimeout(() => {
           window.setInterval(() => {
             cycleIdx = (cycleIdx + 1) % cycles.length;

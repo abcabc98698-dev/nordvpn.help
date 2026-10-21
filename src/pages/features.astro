@@ -4,234 +4,139 @@ import PageHeader from "@/components/elements/PageHeader.astro";
 import Button from "@/components/ui/Button.astro";
 import { siteConfig } from "@/config/site";
 import {
-  LayoutDashboard, Layers, FileText, Sparkles, Zap, Palette,
-  ArrowRight, Check
+  Zap, Lock, Globe, Cpu, Layers, Activity, CheckCircle
 } from "@lucide/astro";
 
 const featureModules = [
   {
-    icon: LayoutDashboard,
-    title: "Clean, scalable page structure",
-    desc: "Nine pre-built pages — Home, Features, Pricing, Blog, Changelog, About, Contact, Elements, 404 — wired with consistent hierarchy, spacing, and typography. Add your tenth without re-deciding any of it.",
-    points: ["9 pre-built page templates", "Token-driven spacing (4 / 8 / 12 / 16 / 24 …)", "1200px max-width, 800px inner content", "Mobile-first responsive (375 / 768 / 1024 / 1440)"],
-    direction: "left",
-    visual: "wireframe",
+    icon: Zap,
+    title: "企业级 IEPL 物理专线架构",
+    desc: "采用点对点物理光缆内网直连（IEPL），数据完全避开公网国际骨干出口。晚高峰时段全国网络发生拥堵时，专线通道始终享有高保障带宽，实现 0 丢包与毫秒级极速直达。",
+    points: [
+      "沪港、深港、京德专线物理链路端到端传输",
+      "全链路抖动 < 3ms，晚高峰持续稳定不卡顿",
+      "单节点最高支持 2.5Gbps 超大吞吐能力",
+      "全天候双路热备自动倒换容灾保护"
+    ],
+  },
+  {
+    icon: Lock,
+    title: "新一代 VLESS 协议抗封锁体系",
+    desc: "全面拥抱更安全、更现代的 VLESS 传输协议，去除传统旧协议冗余复杂的 TLS-in-TLS 多层封包开销，天然具备抗深度数据包检测（DPI）特性与更轻的握手延迟。",
+    points: [
+      "轻量级协议头设计，握手握联提速 40%",
+      "高度拟真正常 Web 流量特征，抗阻断能力卓越",
+      "全链路 AEAD 现代高强度双向加密验证",
+      "兼容各种网络环境，长期保活不掉线"
+    ],
+  },
+  {
+    icon: Globe,
+    title: "原生住宅与商宽 IP 资源矩阵",
+    desc: "精选落地机房原生住宅与高质量商业宽带 IP，彻底告别普通广播级机房共享 IP 的风控拦截，完美赋能 AI 智能体开发、跨境出海直播与海外流媒体解锁。",
+    points: [
+      "支持 ChatGPT、Claude、Midjourney 深度会话无风控",
+      "解锁 Netflix 4K HDR、Disney+、YouTube 超清画质",
+      "支持 TikTok 欧美东南亚跨境直播与店铺运营",
+      "原生 IP 定期健康轮巡，保障低风险值环境"
+    ],
   },
   {
     icon: Layers,
-    title: "Modular, plug-and-play sections",
-    desc: "Every section is a standalone Astro component with a consistent props interface. Reorder Hero, Features, Pricing, Steps, FAQ, FinalCTA without rewriting layout glue.",
-    points: ["15+ reusable section components", "Consistent props API (title, description, items)", "Mix, match, and reorder without conflicts", "Documented in /elements for quick reference"],
-    direction: "right",
-    visual: "blocks",
+    title: "双轨客户端支持：官方自研 + 通用生态",
+    desc: "为兼顾新手小白与技术极客的不同需求，既提供跨平台官方自研客户端一键直连，又完整支持标准订阅链接导出，与全球主流开源客户端生态完美共融。",
+    points: [
+      "官方自研客户端：Windows / macOS / Android / iOS 一键登录直连",
+      "全兼容开源生态：Clash Verge、Shadowrocket、Surge、v2rayN、Sing-box",
+      "支持一键订阅自动更新节点与智能测速分流",
+      "全站套餐均不限制并发设备连接数量"
+    ],
   },
   {
-    icon: FileText,
-    title: "Content with full MDX support",
-    desc: "Blog and changelog powered by Astro 6 Content Layer. Plain Markdown for prose, imported Astro components for interactive bits. No CMS, no plugin sprawl.",
-    points: ["Astro 6 Content Layer with glob loader", "Component imports inside MDX", "TOC + reading progress + share built-in", "Auto RSS feed at /rss.xml"],
-    direction: "left",
-    visual: "mdx",
+    icon: Cpu,
+    title: "全节点 ×1 真实倍率承诺",
+    desc: "坚决抵制业内不良商家使用 2x-5x 暗扣倍率掠夺流量的行为。在 NordVPN 官方专线站，所有专线节点统一标注真实 1x 倍率，每一兆流量都实打实用于业务传输。",
+    points: [
+      "全节点 1x 计费，无任何隐形倍率换算",
+      "控制台实时同步流量使用统计图表",
+      "套餐用量透明可溯，无任何峰谷期差异扣费",
+      "提供年付让利与一次性永久版多种选择"
+    ],
   },
   {
-    icon: Sparkles,
-    title: "Subtle, purposeful animations",
-    desc: "Scroll reveals via AOS, orchestrated entrances via motion.js, and a staggered hero text component. Restraint over spectacle — every animation has a reason.",
-    points: ["AOS scroll reveal with `data-aos-once`", "motion.js for orchestrated timelines", "AnimatedText for hero stagger", "Honors prefers-reduced-motion"],
-    direction: "right",
-    visual: "motion",
-  },
-  {
-    icon: Zap,
-    title: "Fast by default",
-    desc: "Astro ships zero JavaScript by default — interactive islands load only where needed. Tested on Vercel Edge and Cloudflare Pages, scoring Lighthouse 95+ across the board from a fresh install.",
-    points: ["Zero JS by default (Astro Islands)", "Automatic Sharp image optimization", "Static output, deployable anywhere", "Lighthouse 95+ on a fresh install"],
-    direction: "left",
-    visual: "lighthouse",
-  },
-  {
-    icon: Palette,
-    title: "Token-driven design system",
-    desc: "Colors, fonts, spacing, radii, and motion timing are all CSS custom properties documented in docs/DESIGN.md. Rebrand by editing one file — the rest of the site follows.",
-    points: ["~30 documented CSS tokens", "Tailwind v4 @theme integration", "Built-in dark mode with no flash", "/elements page as live reference"],
-    direction: "right",
-    visual: "palette",
+    icon: Activity,
+    title: "7×24 小时 SLA 专线高可用保障",
+    desc: "自动化运维系统每隔 10 秒对全球专线节点发起真实端到端探测。一旦监测到某地区光纤波动，调度网关将在 30 秒内无感热切至同地区备用节点，保障业务不掉线。",
+    points: [
+      "SLA 服务可用性指标达 99.98% 以上",
+      "分布式双活机房布局，节点永不全线中断",
+      "全天候专属网络运维值班与工单响应",
+      "提供企业级物理独享线路与专属原生 IP 部署"
+    ],
   },
 ];
 ---
 
 <Layout
-  title="Features — RicoFast"
-  description="Everything you need to build a modern SaaS site. Carefully designed sections and production-ready components."
+  title={`专线技术与产品优势 — ${siteConfig.title}`}
+  description="深度解析 NordVPN 官方授权专线站的企业级 IEPL 物理专线、VLESS 现代协议、原生住宅 IP 与全节点 1x 真实倍率。"
 >
   <section class="site-container my-12">
     <PageHeader
-      title="Everything you need to build a modern SaaS site"
-      description="Carefully designed sections, production-ready components, and a layout system that scales with your product."
+      title="核心专线技术架构与产品优势"
+      description="了解我们如何通过物理专线、现代加密协议与原生住宅 IP，为用户重塑极致流畅的出海互联体验。"
     />
   </section>
 
-  <!-- Feature Detail Modules -->
-  {featureModules.map((mod) => (
-    <section class="py-16 md:py-24 site-container">
-      <div class={`flex flex-col ${mod.direction === 'right' ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-10 md:gap-16`}>
-        <!-- Text -->
-        <div class="flex-1 min-w-0" data-aos={mod.direction === 'right' ? 'fade-left-sm' : 'fade-right-sm'} data-aos-once="true">
-          <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-            <mod.icon class="w-6 h-6 text-primary" />
+  <!-- Feature Modules Detail Cards -->
+  <section class="site-container max-w-5xl mx-auto pb-24 space-y-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {featureModules.map((m, i) => (
+        <div
+          class="p-6 sm:p-8 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/15 dark:border-neutral-700 hover:border-primary/40 hover:shadow-lg transition-all"
+          data-aos="fade-up-sm"
+          data-aos-delay={i * 80}
+          data-aos-once="true"
+        >
+          <div class="flex items-center gap-3 mb-4">
+            <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-lighter flex-shrink-0">
+              <m.icon class="w-5 h-5" />
+            </div>
+            <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+              {m.title}
+            </h3>
           </div>
-          <h2 class="text-2xl md:text-3xl font-brand mb-4">{mod.title}</h2>
-          <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed mb-6">{mod.desc}</p>
-          <ul class="space-y-3">
-            {mod.points.map((point) => (
-              <li class="flex items-start gap-2">
-                <Check class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                <span class="text-sm text-neutral-600 dark:text-neutral-300">{point}</span>
+          <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed mb-6">
+            {m.desc}
+          </p>
+          <ul class="space-y-2 border-t border-dashed border-neutral-200 dark:border-neutral-700/80 pt-4 text-xs">
+            {m.points.map((pt) => (
+              <li class="flex items-start gap-2 text-neutral-600 dark:text-neutral-300">
+                <CheckCircle class="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                <span>{pt}</span>
               </li>
             ))}
           </ul>
         </div>
+      ))}
+    </div>
 
-        <!-- Visual -->
-        <div class="flex-1 min-w-0 w-full" data-aos={mod.direction === 'right' ? 'fade-right-sm' : 'fade-left-sm'} data-aos-delay="200" data-aos-once="true">
-          <div class="relative rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 h-[280px] md:h-[340px] overflow-hidden p-6">
-
-            <!-- 1. Page wireframe -->
-            {mod.visual === "wireframe" && (
-              <div class="h-full flex flex-col gap-2.5">
-                <div class="h-5 rounded-md border border-dashed border-primary/30 flex items-center px-2 gap-1.5">
-                  <div class="w-2 h-2 rounded-full bg-primary/40"></div>
-                  <div class="flex-1"></div>
-                  <div class="w-6 h-1 rounded-full bg-primary/30"></div>
-                  <div class="w-6 h-1 rounded-full bg-primary/30"></div>
-                  <div class="w-6 h-1 rounded-full bg-primary/30"></div>
-                </div>
-                <div class="h-16 rounded-md border border-dashed border-primary/30 bg-primary/5 flex items-center justify-center">
-                  <div class="text-[9px] uppercase tracking-wider text-primary/60">Hero</div>
-                </div>
-                <div class="grid grid-cols-3 gap-2 flex-1">
-                  <div class="rounded-md border border-dashed border-primary/30 bg-primary/5"></div>
-                  <div class="rounded-md border border-dashed border-primary/30 bg-primary/5"></div>
-                  <div class="rounded-md border border-dashed border-primary/30 bg-primary/5"></div>
-                </div>
-                <div class="h-10 rounded-md border border-dashed border-primary/30 bg-accent/10"></div>
-              </div>
-            )}
-
-            <!-- 2. Modular blocks -->
-            {mod.visual === "blocks" && (
-              <div class="h-full relative flex items-center justify-center">
-                <div class="absolute top-4 left-4 w-28 h-20 rounded-xl border border-dashed border-primary/40 bg-primary/10 rotate-[-6deg] shadow-sm flex items-center justify-center">
-                  <span class="text-[10px] uppercase tracking-wider text-primary/70">Hero</span>
-                </div>
-                <div class="relative w-32 h-24 rounded-xl border border-dashed border-primary/50 bg-bg-secondary dark:bg-bg-secondary-dark shadow-md flex items-center justify-center z-10">
-                  <span class="text-[10px] uppercase tracking-wider text-primary">Features</span>
-                </div>
-                <div class="absolute bottom-4 right-4 w-28 h-20 rounded-xl border border-dashed border-accent/50 bg-accent/15 rotate-[8deg] shadow-sm flex items-center justify-center">
-                  <span class="text-[10px] uppercase tracking-wider text-amber-700/80 dark:text-amber-300/80">Pricing</span>
-                </div>
-                <div class="absolute top-12 right-10 w-20 h-14 rounded-xl border border-dashed border-primary/30 bg-bg-primary/40 dark:bg-neutral-900/40 rotate-[-4deg] shadow-sm flex items-center justify-center">
-                  <span class="text-[9px] uppercase tracking-wider text-primary/50">FAQ</span>
-                </div>
-              </div>
-            )}
-
-            <!-- 3. MDX code -->
-            {mod.visual === "mdx" && (
-              <div class="h-full font-mono text-[11px] leading-relaxed text-neutral-600 dark:text-neutral-300 overflow-hidden">
-                <div class="text-neutral-400">---</div>
-                <div><span class="text-primary">title</span>: <span class="text-emerald-600 dark:text-emerald-400">"Launching v1.2"</span></div>
-                <div><span class="text-primary">publishDate</span>: 2026-03-18</div>
-                <div><span class="text-primary">tags</span>: [<span class="text-emerald-600 dark:text-emerald-400">"Release"</span>]</div>
-                <div class="text-neutral-400">---</div>
-                <div class="mt-2"><span class="text-amber-600 dark:text-amber-400">## What's new</span></div>
-                <div class="mt-1">Three months after v1, RicoFast</div>
-                <div>v1.2 ships today.</div>
-                <div class="mt-2 text-purple-600 dark:text-purple-400">&lt;Callout type="success"&gt;</div>
-                <div class="pl-4">Lighthouse 95+ across the board</div>
-                <div class="text-purple-600 dark:text-purple-400">&lt;/Callout&gt;</div>
-              </div>
-            )}
-
-            <!-- 4. Motion -->
-            {mod.visual === "motion" && (
-              <div class="h-full relative flex items-center justify-center">
-                <div class="absolute w-24 h-24 rounded-2xl border border-primary/20 bg-primary/5 translate-x-[-32px] translate-y-[-24px] opacity-30"></div>
-                <div class="absolute w-24 h-24 rounded-2xl border border-primary/30 bg-primary/10 translate-x-[-16px] translate-y-[-12px] opacity-60"></div>
-                <div class="absolute w-24 h-24 rounded-2xl border border-primary/50 bg-primary/20 shadow-md"></div>
-                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5">
-                  <Sparkles class="w-3 h-3 text-primary" />
-                  <span class="text-[10px] uppercase tracking-wider text-primary">Staggered entrance</span>
-                </div>
-              </div>
-            )}
-
-            <!-- 5. Lighthouse -->
-            {mod.visual === "lighthouse" && (
-              <div class="h-full flex flex-col">
-                <div class="grid grid-cols-4 gap-3 flex-1 items-center">
-                  {[
-                    { label: "Perf", value: 98, color: "text-emerald-500" },
-                    { label: "A11y", value: 90, color: "text-emerald-500" },
-                    { label: "Best", value: 100, color: "text-emerald-500" },
-                    { label: "SEO", value: 95, color: "text-emerald-500" },
-                  ].map((m) => (
-                    <div class="flex flex-col items-center gap-2">
-                      <div class="relative w-14 h-14 rounded-full border-2 border-emerald-500/30 bg-emerald-500/5 flex items-center justify-center">
-                        <span class={`text-base font-brand ${m.color}`}>{m.value}</span>
-                      </div>
-                      <span class="text-[10px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400">{m.label}</span>
-                    </div>
-                  ))}
-                </div>
-                <div class="mt-4 flex items-center justify-center gap-1.5">
-                  <Zap class="w-3 h-3 text-primary" />
-                  <span class="text-[10px] uppercase tracking-wider text-primary">Lighthouse · Home page</span>
-                </div>
-              </div>
-            )}
-
-            <!-- 6. Palette -->
-            {mod.visual === "palette" && (
-              <div class="h-full flex flex-col gap-3">
-                <div class="flex gap-2">
-                  <div class="flex-1 rounded-lg" style="background: #2d6dc3; height: 56px;"></div>
-                  <div class="flex-1 rounded-lg" style="background: #0066ff; height: 56px;"></div>
-                  <div class="flex-1 rounded-lg" style="background: #8fb9ff; height: 56px;"></div>
-                  <div class="flex-1 rounded-lg" style="background: #fad13b; height: 56px;"></div>
-                  <div class="flex-1 rounded-lg" style="background: #faeb75; height: 56px;"></div>
-                </div>
-                <div class="flex-1 rounded-lg border border-primary/10 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-800/40 p-3 font-mono text-[10px] leading-snug">
-                  <div class="text-neutral-400">@theme &#123;</div>
-                  <div class="pl-3"><span class="text-primary">--color-primary</span>: <span class="text-amber-600 dark:text-amber-400">#2d6dc3</span>;</div>
-                  <div class="pl-3"><span class="text-primary">--color-accent</span>: <span class="text-amber-600 dark:text-amber-400">#fad13b</span>;</div>
-                  <div class="pl-3"><span class="text-primary">--font-brand</span>: Instrument Serif;</div>
-                  <div class="text-neutral-400">&#125;</div>
-                </div>
-              </div>
-            )}
-
-          </div>
+    <!-- SLA Section -->
+    <div id="sla" class="p-8 rounded-2xl bg-gradient-to-r from-bg-secondary to-blue-50/20 dark:from-bg-secondary-dark dark:to-blue-950/20 border border-primary/20">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mb-2">
+            SLA 服务承诺
+          </span>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            99.98% 专线网络可用性保障
+          </h3>
+          <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-xl">
+            我们对每一条 IEPL 物理专线进行全天候可用性追踪。无论是跨国学术研讨、关键外贸洽谈还是长程 AI 生成，网络稳定性始终是我们最重视的底线。
+          </p>
         </div>
-      </div>
-    </section>
-  ))}
-
-  <div class="w-full border-b border-dashed border-neutral-200 dark:border-neutral-700 my-4 site-container"></div>
-
-  <!-- CTA -->
-  <section class="py-16 md:py-24 site-container" data-aos="fade-up-xs" data-aos-once="true">
-    <div class="max-w-2xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-brand mb-4">See it in action</h2>
-      <p class="text-neutral-600 dark:text-neutral-300 mb-8 leading-relaxed">
-        Browse the live demo, then fork the repo when you're ready to make it yours.
-      </p>
-      <div class="flex flex-wrap justify-center gap-3">
-        <Button url="/" type="fill" className="text-lg px-8 py-3">
-          View Live Demo <ArrowRight size={18} />
-        </Button>
-        <Button url={siteConfig.social.github} className="text-lg px-8 py-3" target="_blank">
-          Get Template
+        <Button url={siteConfig.registerUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" type="fill" className="whitespace-nowrap">
+          <Zap class="w-4 h-4 text-accent" /> 开通专线服务
         </Button>
       </div>
     </div>

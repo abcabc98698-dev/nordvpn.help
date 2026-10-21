@@ -1,68 +1,20 @@
 [
 	{
-        "id": 1,
-		"name": "Github",
-        "username": "ricocc",
-		"image": "/assets/social/social-github.jpg",
-		"url": "https://github.com/ricocc/"
+		"id": 1,
+		"name": "官方注册",
+		"username": "NordVPN 授权专线",
+		"url": "https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
 	},
-
 	{
-        "id": 2,
-		"name": "Xiaohongshu",
-        "username": "ricouii",
-		"image": "/assets/social/social-xiaohongshu.jpg",
-		"url": "https://www.xiaohongshu.com/user/profile/5f2b6903000000000101f51f"
+		"id": 2,
+		"name": "实时状态",
+		"username": "SLA 99.98%",
+		"url": "/status"
 	},
-
-    {
-        "id": 3,
-		"name": "Twitter",
-        "username": "ricouii",
-		"image": "/assets/social/social-twitter.jpg",
-		"url": "https://x.com/ricouii"
-	},
-
-    {
-        "id": 4,
-		"name": "Gumroad",
-        "username": "ricoui",
-		"image": "/assets/social/social-gumroad.jpg",
-		"url": "https://ricoui.gumroad.com/"
-	},
-
-    {
-        "id": 5,
-		"name": "Behance",
-        "username": "ricoui",
-		"image": "/assets/social/social-behance.jpg",
-		"url": "https://www.behance.net/ricoui"
-	},
-
-    {
-        "id": 6,
-		"name": "figma",
-        "username": "ricocc",
-		"image": "/assets/social/social-figma.jpg",
-		"url": "https://www.figma.com/@ricocc",
-        "isShow": false
-	},
-
-    {
-        "id": 7,
-		"name": "Dribbble",
-        "username": "ricoui",
-		"image": "/assets/social/social-dribbble.jpg",
-		"url": "https://dribbble.com/ricoui"
-	},
-
-    {
-        "id": 8,
-		"name": "Email",
-        "username": "ricocc",
-		"image": "/assets/social/social-email.jpg",
-		"url": "mailto:ricocc@qq.com"
+	{
+		"id": 3,
+		"name": "帮助中心",
+		"username": "在线工单支持",
+		"url": "/contact"
 	}
-
-
 ]

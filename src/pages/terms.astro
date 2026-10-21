@@ -1,0 +1,65 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import { siteConfig } from "@/config/site";
+import { FileCheck } from "@lucide/astro";
+---
+
+<Layout
+  title={`服务条款 (Terms of Service) — ${siteConfig.title}`}
+  description="NordVPN 官方授权专线站用户服务协议、使用规范、SLA 保证与合理使用条款说明。"
+>
+  <section class="site-container my-12">
+    <PageHeader
+      title="服务条款与使用协议 (Terms of Service)"
+      description="生效日期：2020年1月1日 · 最近修订：2026年1月"
+    />
+  </section>
+
+  <section class="site-container max-w-3xl mx-auto pb-24">
+    <div class="prose dark:prose-invert max-w-none space-y-8 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+      
+      <div class="p-4 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-neutral-200 dark:border-neutral-700">
+        <p class="font-bold mb-1 flex items-center gap-2 text-neutral-900 dark:text-neutral-100">
+          <FileCheck class="w-4 h-4 text-primary" /> 欢迎使用 NordVPN 官方授权专线服务
+        </p>
+        <p class="text-xs">
+          本服务协议由用户（以下简称“您”）与 NordVPN 官方授权服务站（nordvpn.help）共同订立。在您注册并使用本站所提供的专线网络、自研客户端及相关服务前，请仔细阅读本协议。
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">1. 服务内容与授权范围</h3>
+        <p>
+          本站为用户提供基于 IEPL 企业内网专线与 VLESS 协议的跨境网络互联服务，包含但不限于自研客户端下载、订阅链接分发、节点测速与工单售后支持。
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">2. 合理使用规范 (Acceptable Use Policy)</h3>
+        <p>为维护专线网络的纯净度与全体用户的网络质量，严禁利用本网络进行以下行为：</p>
+        <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm mt-2">
+          <li>发起任何形式的网络攻击（如 DDoS、CC、端口扫描或恶意渗透测试）。</li>
+          <li>发送未经请求的大规模垃圾邮件（Spam）、进行电信诈骗或网络钓鱼。</li>
+          <li>从事侵犯他人知识产权或传播非法暴力内容的活动。</li>
+          <li>利用 BT / P2P 下载版权敏感洪流（为防止机房 IP 被国际版权组织 DMCA 投诉停机）。</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">3. 服务可用性保证 (SLA) 与退款政策</h3>
+        <p>
+          我们承诺核心 IEPL 骨干专线提供 99.98% 的月度可用性。若因骨干光缆维护产生偶发中断，自动化监控系统将在 30 秒内完成智能冗余路由热切。新开通用户如遇重大无法解决的技术故障，可在开通 24 小时内联系在线客服协助处理。
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">4. 协议变更与终止</h3>
+        <p>
+          我们保留根据法律法规要求或技术网络演进更新本服务条款的权利。修改后的协议一经公布即刻生效。
+        </p>
+      </div>
+
+    </div>
+  </section>
+</Layout>

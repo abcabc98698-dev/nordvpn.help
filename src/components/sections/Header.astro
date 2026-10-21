@@ -1,19 +1,27 @@
 ---
-import { Moon, SunMedium, ChevronDown, ChevronRight, Menu, X } from "@lucide/astro";
+import { Moon, SunMedium, ChevronDown, ChevronRight, Menu, X, Zap } from "@lucide/astro";
 import { siteConfig } from "@/config/site";
-import menus from "@/collections/menu.json";
+import rawMenus from "@/collections/menu.json";
 import Button from "@/components/ui/Button.astro";
 import Logo from "@/components/ui/Logo.astro";
+
+interface MenuItem {
+  name: string;
+  url: string;
+  children?: Array<{ name: string; url: string }>;
+}
+
+const menus: MenuItem[] = rawMenus as MenuItem[];
 ---
 
 <!-- This is an invisible div with relative position so that it takes up the height of the menu (because menu is absolute/fixed) -->
 <div class="relative w-full h-16 sm:h-20 opacity-0 pointer-events-none"></div>
-<header id="header" class="fixed top-2 sm:top-4 z-50 w-full px-3 sm:px-4 lg:px-6">
+<header id="header" class="fixed top-2 sm:top-4 z-50 w-full px-2 sm:px-4 lg:px-6">
   <div id="site-container"
-    class="flex items-center justify-between h-14 sm:h-15 site-container mx-auto px-4 sm:px-6 py-2.5 border-transparent border-[0.5px] transition-all duration-300"
+    class="flex items-center justify-between w-full max-w-7xl mx-auto h-14 sm:h-16 px-3 sm:px-5 lg:px-6 py-2 border-transparent border-[0.5px] transition-all duration-300"
   >
     <!-- Logo -->
-    <div class="flex-shrink-0 z-50">
+    <div class="shrink-0 z-50 flex items-center pr-2">
       <Logo />
     </div>
 
@@ -26,23 +34,36 @@ import Logo from "@/components/ui/Logo.astro";
 
     <!-- Navigation -->
     <nav
-      class="relative z-30 flex flex-row-reverse justify-start w-full text-sm sm:justify-end text-neutral-500 dark:text-neutral-400 sm:flex-row sm:items-center"
+      class="relative z-30 flex items-center justify-end flex-1 min-w-0 text-sm text-neutral-500 dark:text-neutral-400"
     >
-      <!-- Mobile Menu Toggle Buttons -->
-      <div class="flex items-center gap-2 sm:hidden">
-        <!-- Dark Mode Toggle (Mobile) -->
+      <!-- Mobile / Tablet Toggle Buttons & Quick CTA -->
+      <div class="flex items-center gap-1.5 sm:gap-2 lg:hidden">
+        <!-- Quick CTA on Tablet (sm to lg) -->
+        <Button
+          url={siteConfig.registerUrl}
+          target="_blank"
+          rel="nofollow sponsored noopener noreferrer"
+          type="fill"
+          size="xs"
+          className="hidden sm:inline-flex whitespace-nowrap text-xs px-2.5 py-1.5 shrink-0"
+        >
+          <Zap class="w-3.5 h-3.5 text-accent" /> 立即注册
+        </Button>
+
+        <!-- Dark Mode Toggle (Mobile / Tablet) -->
         <div
           id="darkToggleMobile"
-          class="flex items-center justify-center w-10 h-10 cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edeefa] border-[0.5px] border-[#f3f3ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-transform duration-200 active:scale-95"
+          class="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edeefa] border-[0.5px] border-[#f3f3ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-transform duration-200 active:scale-95 shrink-0"
+          aria-label="切换明暗主题"
         >
           <div
-            class="flex justify-center items-center w-6 h-6 relative overflow-hidden rounded-full bg-[#7fa1ff]  bg-gradient-to-b from-[#85a6ff] to-[#2d6dc3] border-[0.5px] border-[#7fa1ff]"
+            class="flex justify-center items-center w-5 h-5 sm:w-6 sm:h-6 relative overflow-hidden rounded-full bg-[#7fa1ff] bg-gradient-to-b from-[#85a6ff] to-[#2d6dc3] border-[0.5px] border-[#7fa1ff]"
             style="box-shadow: 0px 2px 3px 0 rgba(55,52,209,0.21);"
           >
             <SunMedium
-              class="absolute hidden text-white w-4 h-4 transition duration-200 transform ease mobile-sun" />
+              class="absolute hidden text-white w-3.5 h-3.5 sm:w-4 sm:h-4 transition duration-200 transform ease mobile-sun" />
             <Moon
-              class="absolute hidden text-white w-4 h-4 transition duration-200 transform ease mobile-moon" />
+              class="absolute hidden text-white w-3.5 h-3.5 sm:w-4 sm:h-4 transition duration-200 transform ease mobile-moon" />
           </div>
         </div>
 
@@ -50,66 +71,66 @@ import Logo from "@/components/ui/Logo.astro";
         <button
           type="button"
           id="openMenu"
-          aria-label="Open menu"
-          class="flex items-center justify-center w-10 h-10 cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edeefa] border-[0.5px] border-[#f3f3ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-all duration-200 hover:shadow-md active:scale-90"
+          aria-label="打开导航菜单"
+          class="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edeefa] border-[0.5px] border-[#f3f3ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-all duration-200 hover:shadow-md active:scale-90 shrink-0"
         >
-          <Menu class="w-5 h-5 text-neutral-700 dark:text-neutral-200" stroke-width={2} />
+          <Menu class="w-4 h-4 sm:w-5 sm:h-5 text-neutral-700 dark:text-neutral-200" stroke-width={2} />
         </button>
 
         <!-- Close Menu Button -->
         <button
           type="button"
           id="closeMenu"
-          aria-label="Close menu"
-          class="hidden items-center justify-center w-10 h-10 cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edeefa] border-[0.5px] border-[#f3f3ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-all duration-200 hover:shadow-md active:scale-90"
+          aria-label="关闭导航菜单"
+          class="hidden items-center justify-center w-9 h-9 sm:w-10 sm:h-10 cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edeefa] border-[0.5px] border-[#f3f3ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-all duration-200 hover:shadow-md active:scale-90 shrink-0"
         >
-          <X class="w-5 h-5 text-neutral-700 dark:text-neutral-200" stroke-width={2} />
+          <X class="w-4 h-4 sm:w-5 sm:h-5 text-neutral-700 dark:text-neutral-200" stroke-width={2} />
         </button>
       </div>
 
-      <!-- Menu Items -->
+      <!-- Menu Items (Mobile Drawer / Desktop Row) -->
       <div
         id="menu"
-        class="fixed top-[68px] sm:top-0 left-3 right-3 sm:left-0 sm:right-0 ease-out duration-300 z-40 flex-col items-center justify-start hidden w-auto h-auto text-sm pt-4 pb-4 sm:py-0 sm:relative sm:flex-row sm:flex"
+        class="fixed top-[66px] sm:top-[74px] lg:top-0 left-3 right-3 lg:left-0 lg:right-0 ease-out duration-300 z-40 flex-col items-center justify-start hidden w-auto h-auto text-sm pt-4 pb-4 lg:py-0 lg:relative lg:flex-row lg:flex"
       >
         <!-- Mobile Menu Background -->
         <div
-          class="absolute inset-0 top-0 right-0 block w-full h-full sm:hidden"
+          class="absolute inset-0 top-0 right-0 block w-full h-full lg:hidden"
         >
           <div
-            class="relative w-full h-full bg-white/95 dark:bg-bg-primary-dark/95 border border-dashed border-neutral-300 dark:border-neutral-700 backdrop-blur-md rounded-2xl shadow-lg"
+            class="relative w-full h-full bg-white/95 dark:bg-bg-primary-dark/95 border border-dashed border-neutral-300 dark:border-neutral-700 backdrop-blur-md rounded-2xl shadow-xl"
           >
           </div>
         </div>
 
         <!-- Menu Links -->
-        <div class="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center w-full sm:w-auto px-2 sm:px-0 gap-0.5 sm:gap-0">
+        <div class="relative z-10 flex flex-col lg:flex-row items-stretch lg:items-center w-full lg:w-auto px-2 lg:px-0 gap-0.5 lg:gap-0.5 xl:gap-1">
           <!-- Mobile menu label -->
-          <div class="block sm:hidden px-3 pt-1 pb-2">
-            <span class="text-[10px] font-medium uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500">Navigation</span>
+          <div class="block lg:hidden px-3 pt-1 pb-2">
+            <span class="text-[10px] font-medium uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500">网站导航</span>
           </div>
           {
             menus.map((menu) => {
               if (menu.children && menu.children.length > 0) {
                 return (
-                  <div class="dropdown-wrapper relative w-full sm:w-auto" data-open="false">
+                  <div class="dropdown-wrapper relative w-full lg:w-auto shrink-0" data-open="false">
                     <button
                       type="button"
-                      class="dropdown-toggle group relative flex items-center justify-between sm:justify-center w-full sm:w-auto px-3 py-3 sm:py-2 sm:px-3 md:px-4 font-medium tracking-wide duration-200 ease-out rounded-lg sm:rounded-none text-neutral-700 dark:text-neutral-200 hover:text-primary hover:bg-primary/5 sm:hover:bg-transparent dark:hover:text-white dark:hover:bg-primary/10 sm:dark:hover:bg-transparent active:scale-[0.98] sm:active:scale-100 transition-all gap-1 text-left sm:text-center"
+                      class="dropdown-toggle group relative flex items-center justify-between lg:justify-center w-full lg:w-auto px-3 py-3 lg:py-1.5 lg:px-2 xl:px-3 text-sm lg:text-[13px] xl:text-sm font-medium tracking-wide duration-200 ease-out rounded-lg lg:rounded-none text-neutral-700 dark:text-neutral-200 hover:text-primary hover:bg-primary/5 lg:hover:bg-transparent dark:hover:text-white dark:hover:bg-primary/10 lg:dark:hover:bg-transparent active:scale-[0.98] lg:active:scale-100 transition-all gap-1 text-left lg:text-center whitespace-nowrap shrink-0"
                       aria-expanded="false"
                       aria-haspopup="true"
                     >
-                      <span class="flex-1 sm:flex-initial">{menu.name}</span>
-                      <ChevronDown class="dropdown-chevron w-4 h-4 transition-transform duration-200 text-neutral-400 group-hover:text-primary dark:text-neutral-500" />
+                      <span class="whitespace-nowrap flex-1 lg:flex-initial">{menu.name}</span>
+                      <ChevronDown class="dropdown-chevron w-3.5 h-3.5 transition-transform duration-200 text-neutral-400 group-hover:text-primary dark:text-neutral-500 shrink-0" />
                     </button>
-                    <div class="dropdown-panel sm:absolute sm:top-full sm:left-1/2 sm:mt-2 sm:min-w-[200px] sm:rounded-xl sm:border sm:border-dashed sm:border-primary/20 dark:sm:border-neutral-700 sm:bg-white/95 dark:sm:bg-bg-secondary-dark sm:p-2 hidden sm:invisible sm:opacity-0 sm:flex sm:flex-col sm:transition-all sm:duration-200">
+                    <div class="dropdown-panel lg:absolute lg:top-full lg:left-1/2 lg:mt-2 lg:min-w-[200px] lg:rounded-xl lg:border lg:border-dashed lg:border-primary/20 dark:lg:border-neutral-700 lg:bg-white/95 dark:lg:bg-bg-secondary-dark lg:p-2 hidden lg:invisible lg:opacity-0 lg:flex lg:flex-col lg:transition-all lg:duration-200 shadow-xl">
                       {menu.children.map((child) => (
                         <a
                           href={child.url}
-                          class="dropdown-link group/link flex items-center justify-between sm:justify-start w-full px-3 sm:px-4 py-2.5 sm:py-2 rounded-md text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:text-primary dark:hover:text-primary-light hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors duration-150 text-left"
+                          class="dropdown-link group/link flex items-center justify-between lg:justify-start w-full px-3 lg:px-4 py-2.5 lg:py-2 rounded-md text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:text-primary dark:hover:text-primary-light hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors duration-150 text-left whitespace-nowrap shrink-0"
                         >
-                          <span>{child.name}</span>
-                          <ChevronRight class="w-3.5 h-3.5 sm:hidden text-neutral-300 dark:text-neutral-600 group-hover/link:text-primary transition-colors" />
+                          <span class="whitespace-nowrap">{child.name}</span>
+                          <ChevronRight class="w-3.5 h-3.5 lg:hidden text-neutral-300 dark:text-neutral-600 group-hover/link:text-primary transition-colors shrink-0" />
                         </a>
                       ))}
                     </div>
@@ -119,10 +140,10 @@ import Logo from "@/components/ui/Logo.astro";
               return (
                 <a
                   href={menu.url}
-                  class="group relative flex items-center justify-between sm:justify-center w-full sm:w-auto px-3 py-3 sm:py-2 sm:px-3 md:px-4 font-medium tracking-wide duration-200 ease-out rounded-lg sm:rounded-none text-neutral-700 dark:text-neutral-200 hover:text-primary hover:bg-primary/5 sm:hover:bg-transparent dark:hover:text-white dark:hover:bg-primary/10 sm:dark:hover:bg-transparent active:scale-[0.98] sm:active:scale-100 transition-all text-left sm:text-center"
+                  class="group relative flex items-center justify-between lg:justify-center w-full lg:w-auto px-3 py-3 lg:py-1.5 lg:px-2 xl:px-3 text-sm lg:text-[13px] xl:text-sm font-medium tracking-wide duration-200 ease-out rounded-lg lg:rounded-none text-neutral-700 dark:text-neutral-200 hover:text-primary hover:bg-primary/5 lg:hover:bg-transparent dark:hover:text-white dark:hover:bg-primary/10 lg:dark:hover:bg-transparent active:scale-[0.98] lg:active:scale-100 transition-all text-left lg:text-center whitespace-nowrap shrink-0"
                 >
-                  <span>{menu.name}</span>
-                  <ChevronRight class="w-4 h-4 sm:hidden text-neutral-300 dark:text-neutral-600 group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
+                  <span class="whitespace-nowrap">{menu.name}</span>
+                  <ChevronRight class="w-4 h-4 lg:hidden text-neutral-300 dark:text-neutral-600 group-hover:text-primary group-hover:translate-x-0.5 transition-all shrink-0" />
                 </a>
               );
             })
@@ -130,44 +151,63 @@ import Logo from "@/components/ui/Logo.astro";
         </div>
 
         <!-- Divider before CTA on mobile -->
-        <div class="relative z-10 w-full px-5 sm:hidden mt-3">
+        <div class="relative z-10 w-full px-5 lg:hidden mt-3">
           <div class="w-full border-t border-dashed border-neutral-200 dark:border-neutral-700"></div>
         </div>
 
-        <!-- CTA Button (Mobile) -->
-        <div class="relative z-10 w-full px-5 mt-3 sm:hidden">
-          <Button url={siteConfig.social.github || "javascript:void(0);"} type="fill" target="_blank" className="m-auto w-full justify-center ">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-gfykqide="true" class="lucide lucide-github"> <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path>  </svg>  Star on GitHub
+        <!-- CTA Buttons (Mobile) -->
+        <div class="relative z-10 w-full px-5 mt-3 lg:hidden flex flex-col gap-2">
+          <Button url={siteConfig.registerUrl} type="fill" target="_blank" rel="nofollow sponsored noopener noreferrer" className="m-auto w-full justify-center">
+            <Zap class="w-4 h-4 text-accent" /> 立即注册 (官方专线)
+          </Button>
+          <Button url="/sign-in" type="solid" className="m-auto w-full justify-center">
+            客户端下载 / 登录
           </Button>
         </div>
       </div>
 
       <!-- Desktop Actions -->
-      <div class="relative hidden sm:flex items-center gap-2 ml-4 lg:ml-6">
+      <div class="relative hidden lg:flex items-center gap-1.5 xl:gap-2.5 ml-2 lg:ml-3 xl:ml-5 shrink-0">
+        <!-- Login Button -->
+        <a
+          href="/sign-in"
+          class="whitespace-nowrap text-xs xl:text-sm font-medium px-2 xl:px-3 py-1.5 rounded-lg text-neutral-600 dark:text-neutral-300 hover:text-primary dark:hover:text-white transition-colors shrink-0"
+        >
+          客户端 / 登录
+        </a>
+
         <!-- CTA Button (Desktop) -->
-        <Button url={siteConfig.social.github || "javascript:void(0);"} target="_blank"  type="fill" className="md:flex mx-1">
-                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-gfykqide="true" class="lucide lucide-github"> <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path>  </svg> GitHub
+        <Button
+          url={siteConfig.registerUrl}
+          target="_blank"
+          rel="nofollow sponsored noopener noreferrer"
+          type="fill"
+          size="xs"
+          className="whitespace-nowrap shrink-0"
+        >
+          <Zap class="w-3.5 h-3.5 text-accent" /> 立即注册
         </Button>
 
-        <span class="separator-line  hidden sm:inline-block bg-[rgba(183,202,255,0.5)] mt-[20px] -translate-y-1/2 w-px h-[20px]"></span>
+        <span class="separator-line hidden lg:inline-block bg-[rgba(183,202,255,0.5)] w-px h-[18px] mx-0.5 shrink-0"></span>
 
         <!-- Dark Mode Toggle (Desktop) -->
         <div
           id="darkToggle"
-          class="relative flex items-center h-9 px-2 gap-1.5 font-medium cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edf1fa] border-[0.5px] border-[#f3f5ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-all duration-200 hover:shadow-md hover:scale-105 active:scale-95 mx-1"
+          class="relative flex items-center h-8 xl:h-9 px-2 gap-1.5 font-medium cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edf1fa] border-[0.5px] border-[#f3f5ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-all duration-200 hover:shadow-md hover:scale-105 active:scale-95 shrink-0"
+          aria-label="切换明暗主题"
         >
           <div
-            class="flex justify-center items-center flex-shrink-0 w-6 h-6 relative overflow-hidden rounded-full bg-gradient-to-b from-[#85a6ff] to-[#2d6dc3] border-[0.5px] border-[#7fa1ff]"
+            class="flex justify-center items-center shrink-0 w-5 h-5 xl:w-6 xl:h-6 relative overflow-hidden rounded-full bg-gradient-to-b from-[#85a6ff] to-[#2d6dc3] border-[0.5px] border-[#7fa1ff]"
             style="box-shadow: 0px 2px 3px 0 rgba(55,52,209,0.21);"
           >
             <SunMedium id="sun"
-               class="absolute hidden text-white w-4 h-4 transition duration-200 transform ease" />
-            <Moon class="absolute hidden text-white w-4 h-4 transition duration-200 transform ease"
+               class="absolute hidden text-white w-3.5 h-3.5 xl:w-4 xl:h-4 transition duration-200 transform ease" />
+            <Moon class="absolute hidden text-white w-3.5 h-3.5 xl:w-4 xl:h-4 transition duration-200 transform ease"
               id="moon" />
           </div>
-          <span class="hidden sm:inline-block whitespace-nowrap">
-            <span id="dayText" class="flex-shrink-0 text-sm text-left text-[#6f6c8f] dark:text-neutral-400">Light</span>
-            <span id="nightText" class="hidden flex-shrink-0 text-sm text-left text-[#6f6c8f] dark:text-neutral-400">Dark</span>
+          <span class="hidden xl:inline-block whitespace-nowrap">
+            <span id="dayText" class="shrink-0 text-xs xl:text-sm text-left text-[#6f6c8f] dark:text-neutral-400">Light</span>
+            <span id="nightText" class="hidden shrink-0 text-xs xl:text-sm text-left text-[#6f6c8f] dark:text-neutral-400">Dark</span>
           </span>
         </div>
       </div>
@@ -181,15 +221,22 @@ import Logo from "@/components/ui/Logo.astro";
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Force all nav text to stay on one single row */
+  nav a,
+  nav button,
+  nav span {
+    white-space: nowrap !important;
+  }
+
   /* Ensure mobile menu doesn't stick to edges */
-  @media (max-width: 639px) {
+  @media (max-width: 1023px) {
     #menu {
       max-width: calc(100vw - 24px); /* 12px margin on each side */
     }
   }
 
   /* Mobile menu animation */
-  @media (max-width: 639px) {
+  @media (max-width: 1023px) {
     #menu {
       transform: translateY(-10px);
       opacity: 0;
@@ -206,18 +253,22 @@ import Logo from "@/components/ui/Logo.astro";
     /* Staggered entrance for menu items */
     #menu:not(.hidden) > div > a,
     #menu:not(.hidden) > div > .dropdown-wrapper {
-      animation: menuItemIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+      animation: menuItemIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
     }
     #menu:not(.hidden) > div > a:nth-child(2),
-    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(2) { animation-delay: 0.05s; }
+    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(2) { animation-delay: 0.04s; }
     #menu:not(.hidden) > div > a:nth-child(3),
-    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(3) { animation-delay: 0.1s; }
+    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(3) { animation-delay: 0.08s; }
     #menu:not(.hidden) > div > a:nth-child(4),
-    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(4) { animation-delay: 0.15s; }
+    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(4) { animation-delay: 0.12s; }
     #menu:not(.hidden) > div > a:nth-child(5),
-    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(5) { animation-delay: 0.2s; }
+    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(5) { animation-delay: 0.16s; }
     #menu:not(.hidden) > div > a:nth-child(6),
-    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(6) { animation-delay: 0.25s; }
+    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(6) { animation-delay: 0.20s; }
+    #menu:not(.hidden) > div > a:nth-child(7),
+    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(7) { animation-delay: 0.24s; }
+    #menu:not(.hidden) > div > a:nth-child(8),
+    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(8) { animation-delay: 0.28s; }
   }
 
   @keyframes menuItemIn {
@@ -244,11 +295,11 @@ import Logo from "@/components/ui/Logo.astro";
   }
 
   /* Desktop underline animation */
-  @media (min-width: 640px) {
+  @media (min-width: 1024px) {
     nav a::after {
       content: '';
       position: absolute;
-      bottom: 0;
+      bottom: -2px;
       left: 50%;
       transform: translateX(-50%) scaleX(0);
       width: 70%;
@@ -269,11 +320,8 @@ import Logo from "@/components/ui/Logo.astro";
   }
 
   /* Dropdown — desktop hover behavior */
-  @media (min-width: 640px) {
+  @media (min-width: 1024px) {
     .dropdown-panel {
-      /* Horizontal centering + entry offset.
-         Using `translate` (the CSS property) avoids stacking with `transform`
-         and gives us a single source of truth for the panel position. */
       translate: -50% -4px;
     }
     .dropdown-wrapper:hover .dropdown-panel,
@@ -300,7 +348,7 @@ import Logo from "@/components/ui/Logo.astro";
   }
 
   /* Dropdown — mobile click-to-expand */
-  @media (max-width: 639px) {
+  @media (max-width: 1023px) {
     .dropdown-panel {
       display: none;
       width: calc(100% - 0.75rem);
@@ -335,7 +383,7 @@ import Logo from "@/components/ui/Logo.astro";
   }
 
   /* Mobile menu item click feedback */
-  @media (max-width: 639px) {
+  @media (max-width: 1023px) {
     nav a:active {
       background-color: var(--color-neutral-100);
     }
@@ -344,7 +392,6 @@ import Logo from "@/components/ui/Logo.astro";
       background-color: rgba(255, 255, 255, 0.05);
     }
   }
-
 
   /* Dark mode toggle button optimization */
   #darkToggle,
@@ -359,43 +406,29 @@ import Logo from "@/components/ui/Logo.astro";
       backdrop-filter: blur(12px);
     }
 
-    @media (max-width: 639px) {
+    @media (max-width: 1023px) {
       #menu > div > div {
         backdrop-filter: blur(16px);
       }
     }
   }
 
-  /* Ensure Logo doesn't shrink on mobile */
-  .flex-shrink-0 {
-    min-width: fit-content;
-  }
-
-  /* Tablet compact layout */
-  @media (min-width: 640px) and (max-width: 767px) {
-    nav a {
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-      font-size: 0.8125rem;
-    }
-  }
-
   /* Prevent horizontal scrolling on mobile */
-  @media (max-width: 639px) {
+  @media (max-width: 1023px) {
     body {
       overflow-x: hidden;
     }
   }
 
   /* Optimize mobile touch feedback */
-  @media (max-width: 639px) {
+  @media (max-width: 1023px) {
     button, a, [role="button"] {
       -webkit-tap-highlight-color: transparent;
     }
   }
 
   /* Menu background on small screens */
-  @media (max-width: 639px) {
+  @media (max-width: 1023px) {
     #mobileMenuBackground {
       opacity: 0;
       transition: opacity 0.3s ease-out;
@@ -405,8 +438,6 @@ import Logo from "@/components/ui/Logo.astro";
       opacity: 1;
     }
   }
-
-
 </style>
 
 <script>
@@ -414,6 +445,7 @@ import Logo from "@/components/ui/Logo.astro";
   declare global {
     interface Window {
       closeMobileMenu: () => void;
+      openMobileMenu: () => void;
     }
   }
 
@@ -481,20 +513,20 @@ import Logo from "@/components/ui/Logo.astro";
   }
 
   // Click hamburger button to open menu
-  openMenu?.addEventListener('click', openMobileMenu);
+  if (openMenu) openMenu.onclick = openMobileMenu;
 
   // Click close button to close menu
-  closeMenu?.addEventListener('click', closeMobileMenu);
+  if (closeMenu) closeMenu.onclick = closeMobileMenu;
 
   // Click background to close menu
-  mobileMenuBackground?.addEventListener('click', closeMobileMenu);
+  if (mobileMenuBackground) mobileMenuBackground.onclick = closeMobileMenu;
 
   // Add click-to-close functionality for mobile menu items
   const menuLinks = menu?.querySelectorAll('a');
   menuLinks?.forEach(link => {
     link.addEventListener('click', () => {
       // Check if in mobile view
-      if (window.innerWidth < 640) {
+      if (window.innerWidth < 1024) {
         closeMobileMenu();
       }
     });
@@ -502,7 +534,7 @@ import Logo from "@/components/ui/Logo.astro";
 
   // Handle window resize
   window.addEventListener('resize', () => {
-    if (window.innerWidth >= 640) {
+    if (window.innerWidth >= 1024) {
       // If resizing from mobile to desktop, ensure menu state is correct
       document.body.style.overflow = '';
       if (menu?.classList.contains('hidden')) {
@@ -512,6 +544,7 @@ import Logo from "@/components/ui/Logo.astro";
   });
 
   // Add to global scope so inline events can call it
+  window.openMobileMenu = openMobileMenu;
   window.closeMobileMenu = closeMobileMenu;
 
   // ─── Dropdown menu (mobile click-to-expand) ────────────────────────────
@@ -530,7 +563,7 @@ import Logo from "@/components/ui/Logo.astro";
   dropdownToggles.forEach((toggle) => {
     toggle.addEventListener('click', (e) => {
       // Desktop uses CSS :hover — no JS toggle needed there
-      if (window.innerWidth >= 640) return;
+      if (window.innerWidth >= 1024) return;
       e.preventDefault();
       e.stopPropagation();
       const wrapper = toggle.closest<HTMLElement>('.dropdown-wrapper');
@@ -545,7 +578,7 @@ import Logo from "@/components/ui/Logo.astro";
   // Close dropdowns when navigating via mobile dropdown link — defer so the link still fires
   document.querySelectorAll<HTMLAnchorElement>('.dropdown-panel a').forEach((link) => {
     link.addEventListener('click', () => {
-      if (window.innerWidth < 640) {
+      if (window.innerWidth < 1024) {
         // Let the navigation happen; close menu state for next visit
         setTimeout(() => {
           closeAllDropdowns();
@@ -555,9 +588,9 @@ import Logo from "@/components/ui/Logo.astro";
     });
   });
 
-  // Reset dropdown state when resizing across the sm breakpoint
+  // Reset dropdown state when resizing across the desktop breakpoint
   window.addEventListener('resize', () => {
-    if (window.innerWidth >= 640) {
+    if (window.innerWidth >= 1024) {
       closeAllDropdowns();
     }
   });

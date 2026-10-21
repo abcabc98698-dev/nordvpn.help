@@ -2,16 +2,20 @@
 import Layout from "@/layouts/Layout.astro";
 import PageHeader from "@/components/elements/PageHeader.astro";
 import BlogSection from "@/components/sections/BlogSection.astro";
+import { siteConfig } from "@/config/site";
 
 const POSTS_PER_PAGE = 6;
 const currentPage = 1;
 ---
 
-<Layout title="Blog — RicoFast" description="Latest articles, updates, and insights from the RicoFast team.">
+<Layout
+  title={`使用教程与出海指南 — ${siteConfig.title}`}
+  description="官方专线网络配置教程、客户端使用说明、ChatGPT/Claude 防风控指南与跨境出海网络实操。"
+>
   <section class="relative z-20 container mx-auto my-12 px-7 lg:px-0">
     <PageHeader
-      title="Blog"
-      description="Latest articles, updates, and insights."
+      title="官方技术教程与出海指南"
+      description="详尽的客户端配置流程、原生住宅 IP 深度解读与跨境电商实战方案。"
     />
   </section>
   <section class="relative z-20 mx-auto my-12 lg:px-0">

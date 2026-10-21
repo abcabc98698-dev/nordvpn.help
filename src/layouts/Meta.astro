@@ -1,40 +1,133 @@
 ---
 import { siteConfig } from '@/config/site.js';
+
 export interface Props {
   title?: string;
   description?: string;
   keywords?: string;
   url?: string;
+  canonical?: string;
   ogImage?: string;
+  ogType?: 'website' | 'article';
   twitterHandle?: string;
+  robots?: string;
+  publishedTime?: string | Date;
+  modifiedTime?: string | Date;
+  author?: string;
+  category?: string;
+  tags?: string[];
 }
 
 const {
-  title,
-  description,
-  keywords = "",
-  url = siteConfig.url, //
-  ogImage = "/og.jpg",
-  twitterHandle = siteConfig.social.twitterName || '',
+  title = siteConfig.meta.title,
+  description = siteConfig.meta.description,
+  keywords = siteConfig.meta.keywords,
+  canonical,
+  ogImage = siteConfig.meta.image,
+  ogType = "website",
+  twitterHandle = siteConfig.meta.twitterHandle,
+  robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  publishedTime,
+  modifiedTime,
+  author = siteConfig.author,
+  category,
+  tags,
 } = Astro.props;
+
+const canonicalUrl = canonical || new URL(Astro.url.pathname, siteConfig.url).href;
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteConfig.url}/#organization`,
+      "name": "NordVPN 官方授权服务站",
+      "url": siteConfig.url,
+      "logo": `${siteConfig.url}/favicon.png`,
+      "description": "2020年起稳定运营的企业级 IEPL 专线与 VLESS 协议服务平台",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": siteConfig.mail,
+        "availableLanguage": ["Chinese", "English"]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteConfig.url}/#website`,
+      "url": siteConfig.url,
+      "name": "NordVPN 官方授权专线网络",
+      "publisher": {
+        "@id": `${siteConfig.url}/#organization`
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "NordVPN 专线网络客户端",
+      "operatingSystem": "Windows, macOS, iOS, Android, Linux",
+      "applicationCategory": "SecurityApplication",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "CNY",
+        "lowPrice": "8.25",
+        "highPrice": "680"
+      }
+    }
+  ]
+};
 ---
 
 <!-- Meta Tags -->
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="icon" type="image/svg+xml" href="/favicon.png" />
+<meta name="robots" content={robots} />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="alternate icon" type="image/png" href="/favicon.png" />
+<link rel="canonical" href={canonicalUrl} />
 <title>{title}</title>
 <meta name="description" content={description} />
 <meta name="keywords" content={keywords} />
-<meta name="author" content={siteConfig.author} />
+<meta name="author" content={author} />
+<meta name="theme-color" content="#2d6dc3" />
+
+<!-- Search Engine Verification Hooks (Google / Bing / Shenma / Baidu) -->
+{siteConfig.verification?.google && (
+  <meta name="google-site-verification" content={siteConfig.verification.google} />
+)}
+{siteConfig.verification?.bing && (
+  <meta name="msvalidate.01" content={siteConfig.verification.bing} />
+)}
+{siteConfig.verification?.baidu && (
+  <meta name="baidu-site-verification" content={siteConfig.verification.baidu} />
+)}
+{siteConfig.verification?.shenma && (
+  <meta name="shenma-site-verification" content={siteConfig.verification.shenma} />
+)}
 
 <!-- Open Graph Tags -->
-<meta property="og:type" content="website" />
+<meta property="og:type" content={ogType} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:url" content={url} />
+<meta property="og:url" content={canonicalUrl} />
 <meta property="og:image" content={ogImage} />
-<meta property="og:site_name" content={title} />
+<meta property="og:site_name" content="NordVPN 官方授权服务站" />
+<meta property="og:locale" content="zh_CN" />
+{ogType === 'article' && publishedTime && (
+  <meta property="article:published_time" content={new Date(publishedTime).toISOString()} />
+)}
+{ogType === 'article' && modifiedTime && (
+  <meta property="article:modified_time" content={new Date(modifiedTime).toISOString()} />
+)}
+{ogType === 'article' && author && (
+  <meta property="article:author" content={author} />
+)}
+{ogType === 'article' && category && (
+  <meta property="article:section" content={category} />
+)}
+{ogType === 'article' && tags && tags.map((t) => (
+  <meta property="article:tag" content={t} />
+))}
 
 <!-- Twitter Meta Tags -->
 <meta name="twitter:card" content="summary_large_image" />
@@ -43,3 +136,6 @@ const {
 <meta name="twitter:image" content={ogImage} />
 <meta name="twitter:site" content={twitterHandle} />
 <meta name="twitter:creator" content={twitterHandle} />
+
+<!-- Structured Data (JSON-LD) -->
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schemaData)} />

@@ -3,6 +3,7 @@ import Layout from "@/layouts/Layout.astro";
 import PageHeader from "@/components/elements/PageHeader.astro";
 import BlogSection from "@/components/sections/BlogSection.astro";
 import { getCollection } from "astro:content";
+import { siteConfig } from "@/config/site";
 
 export const POSTS_PER_PAGE = 6;
 
@@ -31,13 +32,20 @@ export async function getStaticPaths() {
 
 const { page } = Astro.props;
 const currentPage = parseInt(page);
+const canonical = currentPage === 1 ? `${siteConfig.url}/blog/` : `${siteConfig.url}/blog/page/${currentPage}/`;
+const robots = currentPage === 1 ? "noindex, follow" : "index, follow";
 ---
 
-<Layout title={`Blog — RicoFast`} description="Latest articles, updates, and insights from the RicoFast team.">
+<Layout
+  title={`使用教程与出海指南 (第${currentPage}页) — ${siteConfig.title}`}
+  description={`官方专线网络配置教程、客户端使用说明、ChatGPT/Claude 防风控指南与跨境出海网络实操 (第${currentPage}页)。`}
+  canonical={canonical}
+  robots={robots}
+>
   <section class="relative z-20 container mx-auto my-12 px-7 lg:px-0">
     <PageHeader
-      title="Blog"
-      description="Latest articles, updates, and insights."
+      title={`官方技术教程与出海指南 (第${currentPage}页)`}
+      description="详尽的客户端配置流程、原生住宅 IP 深度解读与跨境电商实战方案。"
     />
   </section>
   <section class="relative z-20 mx-auto my-12 px-7 lg:px-0">

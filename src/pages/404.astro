@@ -1,33 +1,33 @@
 ---
 import PageLayout from "@/layouts/PageLayout.astro";
 import Button from "@/components/ui/Button.astro";
-import { ArrowLeft, Compass, House, Mail, Search, ShieldAlert } from "@lucide/astro";
+import { ArrowLeft, Compass, House, Search, ShieldAlert } from "@lucide/astro";
 import { siteConfig } from "@/config/site";
 ---
 
-<PageLayout title="Page Not Found - RicoFast" description="The page you're looking for doesn't exist.">
+<PageLayout title={`页面未找到 (404) — ${siteConfig.title}`} description="您访问的页面不存在或已被移除。" robots="noindex, nofollow">
   <section class="site-container py-14 md:py-24">
     <div class="grid min-h-[62vh] items-center gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,1fr)]">
       <div data-aos="fade-up-xs" data-aos-once="true">
         <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary dark:border-primary-light/20 dark:bg-primary-light/10 dark:text-primary-light">
           <ShieldAlert size={14} />
-          Error 404
+          404 Not Found
         </p>
 
-        <h1 class="max-w-2xl font-brand text-5xl leading-[1.04] tracking-normal text-neutral-800 dark:text-neutral-100 md:text-6xl">
-          This route does not have a page yet.
+        <h1 class="max-w-2xl font-brand text-4xl sm:text-5xl font-bold leading-[1.04] tracking-normal text-neutral-800 dark:text-neutral-100 md:text-6xl">
+          抱歉，您访问的页面不存在
         </h1>
 
-        <p class="mt-5 max-w-xl text-base leading-8 text-neutral-600 dark:text-neutral-300">
-          The link may be outdated, mistyped, or still waiting to be built. Start from a known page, or send us the broken URL so we can trace it.
+        <p class="mt-5 max-w-xl text-sm sm:text-base leading-8 text-neutral-600 dark:text-neutral-300">
+          您所请求的链接可能已失效、输入有误或已迁移至新的专线服务入口。您可以返回官网首页，或查看最新官方专线套餐方案。
         </p>
 
         <div class="mt-7 flex flex-wrap gap-3">
           <Button url="/" type="fill">
-            <ArrowLeft size={16} /> Back to Home
+            <ArrowLeft size={16} /> 返回首页
           </Button>
-          <Button url={`mailto:${siteConfig.mail}?subject=Broken%20link%20on%20RicoFast`}>
-            <Mail size={16} /> Report link
+          <Button url="/#pricing">
+            <Compass size={16} /> 浏览套餐
           </Button>
         </div>
 
